@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; }
+  .banner {
+    width: 1600px; height: 400px; box-sizing: border-box;
+    background: linear-gradient(135deg, #06281d 0%, #0b3d2e 55%, #14532d 100%);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 90px; position: relative; overflow: hidden;
+  }
+  .banner::after {
+    content: ""; position: absolute; inset: 22px;
+    border: 1.5px solid rgba(212, 180, 106, .55); border-radius: 6px;
+    pointer-events: none;
+  }
+  .name { font-family: "Cairo", sans-serif; font-weight: 800; font-size: 84px;
+          letter-spacing: 1px; line-height: 1; color: #f5f1e6; }
+  .name span { color: #d4b46a; }
+  .tag { font-family: "Cairo", sans-serif; font-size: 25px; color: #cfe3d6; margin-top: 18px; }
+  .org { font-family: "Cairo", sans-serif; font-weight: 600; font-size: 19px; color: #d4b46a;
+         margin-top: 26px; letter-spacing: 2px; text-transform: uppercase; }
+  .right { width: 700px; text-align: center; }
+  .phones { font-family: "JetBrains Mono", monospace; font-size: 20px; color: #f5f1e6; white-space: nowrap; text-align: center;
+            direction: ltr; line-height: 1.5; }
+  .phones .t { display: inline-block; unicode-bidi: isolate; margin: 0 2px; }
+  .phones .v { color: #d4b46a; }
+  .arrow { font-family: "Cairo", sans-serif; color: #d4b46a; font-size: 34px; text-align: center;
+           margin: 4px 0 2px; }
+  .text { font-family: "Amiri", serif; font-weight: 700; font-size: 50px; color: #f5f1e6;
+          direction: rtl; text-align: center; line-height: 1.6; }
+</style>
+</head>
+<body>
+  <div class="banner">
+    <div class="left">
+      <div class="name">quran<span>-</span>p2g</div>
+      <div class="tag">Phonemes in, Quranic text out. The inverse of quran-g2p.</div>
+      <div class="org">Quran Lab &nbsp;&middot;&nbsp; Hafs &#x02bf;an &#x02bf;Asim</div>
+    </div>
+    <div class="right">
+      <div class="phones"><span class="t">ب</span> <span class="t v">i</span> <span class="t">س</span> <span class="t">م</span> <span class="t v">i</span> <span class="t">ل</span> <span class="t v">aa</span> <span class="t">ه</span> <span class="t v">i</span> <span class="t">ر</span> <span class="t v">a</span> <span class="t">ح</span> <span class="t">م</span> <span class="t v">aa</span> <span class="t">ن</span> <span class="t v">i</span> <span class="t">ر</span> <span class="t v">a</span> <span class="t">ح</span> <span class="t v">ii</span> <span class="t">م</span></div>
+      <div class="arrow">&darr;</div>
+      <div class="text">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+ "ayat": 6236,
+ "ayat_all_paths_pass": 6236,
+ "single_ayah_paths": 114444,
+ "single_ayah_path_failures": 0,
+ "lattice_canonical_equals_phonemize": 6236,
+ "range_and_basmala_tasks": 1711,
+ "range_paths": 4797,
+ "basmala_paths": 336,
+ "range_and_basmala_failures": 0,
+ "seconds": 528.9,
+ "failures": [],
+ "range_failures": []
+}

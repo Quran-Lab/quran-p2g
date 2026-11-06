@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+src/*.egg-info/
+build/
+dist/
+PLAN.md

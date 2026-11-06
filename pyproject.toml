@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quran-p2g"
+version = "0.1.0"
+description = "Phonemes in, Quranic text out: the inverse companion of quran-g2p (Hafs 'an 'Asim)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Quran Lab" }]
+dependencies = ["numpy"]
+keywords = ["quran", "tajweed", "phonemes", "asr", "arabic", "p2g", "wer"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+quran-p2g = "quran_p2g.cli:main"
+
+[project.urls]
+Repository = "https://github.com/Quran-Lab/quran-p2g"
+Upstream = "https://github.com/Quran-Lab/quran-g2p"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+quran_p2g = ["data/*.json.gz"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

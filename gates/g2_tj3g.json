@@ -1,0 +1,3085 @@
+{
+ "fmt": "tj3g",
+ "planted_cases": 24386,
+ "skipped_no_site": 558,
+ "seconds": 75.1,
+ "by_type": {
+  "vowel_swap": {
+   "cases": 3543,
+   "exact_pct": 100.0,
+   "precision": 100.0,
+   "recall": 100.0,
+   "readback_cases": 3543,
+   "readback_equal_pct": 99.92,
+   "readback_engine_refused": 0
+  },
+  "ALL": {
+   "cases": 24386,
+   "exact_pct": 99.87,
+   "precision": 99.93,
+   "recall": 99.94,
+   "readback_cases": 17257,
+   "readback_equal_pct": 98.71,
+   "readback_engine_refused": 3
+  },
+  "consonant_swap": {
+   "cases": 3544,
+   "exact_pct": 100.0,
+   "precision": 100.0,
+   "recall": 100.0,
+   "readback_cases": 3544,
+   "readback_equal_pct": 99.77,
+   "readback_engine_refused": 1
+  },
+  "long_short": {
+   "cases": 3553,
+   "exact_pct": 100.0,
+   "precision": 100.0,
+   "recall": 100.0,
+   "readback_cases": 3553,
+   "readback_equal_pct": 94.51,
+   "readback_engine_refused": 1
+  },
+  "shadda_drop": {
+   "cases": 3084,
+   "exact_pct": 100.0,
+   "precision": 100.0,
+   "recall": 100.0,
+   "readback_cases": 3084,
+   "readback_equal_pct": 99.9,
+   "readback_engine_refused": 1
+  },
+  "word_skip": {
+   "cases": 3563,
+   "exact_pct": 99.49,
+   "precision": 99.92,
+   "recall": 99.97
+  },
+  "word_repeat": {
+   "cases": 3555,
+   "exact_pct": 99.92,
+   "precision": 99.92,
+   "recall": 99.92
+  },
+  "inserted_syllable": {
+   "cases": 3544,
+   "exact_pct": 99.69,
+   "precision": 99.69,
+   "recall": 99.69,
+   "readback_cases": 3533,
+   "readback_equal_pct": 99.6,
+   "readback_engine_refused": 0
+  }
+ },
+ "misses": [
+  {
+   "ayah": "2:102",
+   "type": "word_skip",
+   "word": 25,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     25,
+     "deviant",
+     "i"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "3:54",
+   "type": "word_skip",
+   "word": 3,
+   "exact": false,
+   "tp": 1,
+   "fp": 1,
+   "fn": 0,
+   "got": [
+    [
+     2,
+     "deleted",
+     ""
+    ],
+    [
+     3,
+     "deviant",
+     "a لّ aa ه u"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "3:83",
+   "type": "word_skip",
+   "word": 6,
+   "exact": false,
+   "tp": 1,
+   "fp": 1,
+   "fn": 0,
+   "got": [
+    [
+     5,
+     "deviant",
+     "ء a س ل a"
+    ],
+    [
+     6,
+     "deviant",
+     "م a"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "4:49",
+   "type": "inserted_syllable",
+   "word": 1,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     0,
+     "deviant",
+     "ء a ل a م ت a"
+    ]
+   ],
+   "planted": "ت a ت a ر a"
+  },
+  {
+   "ayah": "5:27",
+   "type": "word_skip",
+   "word": 6,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     6,
+     "deviant",
+     "i"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "6:10",
+   "type": "word_skip",
+   "word": 3,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     3,
+     "deviant",
+     "i"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "7:66",
+   "type": "inserted_syllable",
+   "word": 4,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     3,
+     "deviant",
+     "ك a ف a ر uu م i"
+    ]
+   ],
+   "planted": "م i م i ں"
+  },
+  {
+   "ayah": "10:104",
+   "type": "word_skip",
+   "word": 7,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     7,
+     "deviant",
+     "i"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "14:3",
+   "type": "word_skip",
+   "word": 7,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     7,
+     "deviant",
+     "a"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "16:43",
+   "type": "inserted_syllable",
+   "word": 5,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     4,
+     "deviant",
+     "ء i لّ aa ر i"
+    ]
+   ],
+   "planted": "ر i ر i ج aa ل a"
+  },
+  {
+   "ayah": "16:85",
+   "type": "inserted_syllable",
+   "word": 5,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     4,
+     "deviant",
+     "ل ع a ذ aa ب a ف a"
+    ]
+   ],
+   "planted": "ف a ف a ل aa"
+  },
+  {
+   "ayah": "19:78",
+   "type": "word_repeat",
+   "word": 2,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     3,
+     "deviant",
+     "ء a م i تّ a خ a ذ a"
+    ]
+   ],
+   "planted": "ء a م i ء a م i"
+  },
+  {
+   "ayah": "21:78",
+   "type": "word_skip",
+   "word": 6,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     6,
+     "deviant",
+     "i"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "23:8",
+   "type": "inserted_syllable",
+   "word": 1,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     0,
+     "deviant",
+     "و a لّ a ذ ii ن a ه u"
+    ]
+   ],
+   "planted": "ه u ه u م"
+  },
+  {
+   "ayah": "39:68",
+   "type": "word_skip",
+   "word": 4,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     4,
+     "deviant",
+     "a"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "40:4",
+   "type": "inserted_syllable",
+   "word": 5,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     4,
+     "deviant",
+     "لّ aa ه i ء i"
+    ]
+   ],
+   "planted": "ء i ء i لّ a"
+  },
+  {
+   "ayah": "40:48",
+   "type": "word_skip",
+   "word": 8,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     8,
+     "deviant",
+     "a"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "41:22",
+   "type": "word_skip",
+   "word": 3,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     3,
+     "deviant",
+     "a"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "42:6",
+   "type": "inserted_syllable",
+   "word": 9,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     8,
+     "deviant",
+     "و a م aa ء a"
+    ]
+   ],
+   "planted": "ء a ء a ں ت a"
+  },
+  {
+   "ayah": "42:39",
+   "type": "word_skip",
+   "word": 4,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     4,
+     "deviant",
+     "u"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "44:54",
+   "type": "word_skip",
+   "word": 3,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     3,
+     "deviant",
+     "i ن"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "53:10",
+   "type": "inserted_syllable",
+   "word": 1,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     0,
+     "deviant",
+     "ف a ء a و ح aa ء i"
+    ]
+   ],
+   "planted": "ء i ء i ل aa"
+  },
+  {
+   "ayah": "53:48",
+   "type": "word_skip",
+   "word": 1,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     0,
+     "deviant",
+     "و a ء a نّ a"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "55:23",
+   "type": "inserted_syllable",
+   "word": 3,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     2,
+     "deviant",
+     "ر a بّ i ك u م aa ت u"
+    ]
+   ],
+   "planted": "ت u ت u ك a ذّ i ب aa ن"
+  },
+  {
+   "ayah": "55:44",
+   "type": "word_skip",
+   "word": 4,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     4,
+     "deviant",
+     "i ن"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "56:22",
+   "type": "word_skip",
+   "word": 1,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     1,
+     "deviant",
+     "u ن"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "67:13",
+   "type": "word_repeat",
+   "word": 2,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     3,
+     "deviant",
+     "ء a و i ج ه a ر uu"
+    ]
+   ],
+   "planted": "ء a و i ء a و i"
+  },
+  {
+   "ayah": "74:33",
+   "type": "word_skip",
+   "word": 1,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     1,
+     "deviant",
+     "i"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "75:27",
+   "type": "word_skip",
+   "word": 1,
+   "exact": false,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "got": [
+    [
+     1,
+     "deviant",
+     "a"
+    ]
+   ],
+   "planted": ""
+  },
+  {
+   "ayah": "79:27",
+   "type": "word_repeat",
+   "word": 3,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     4,
+     "deviant",
+     "ء a م i سّ a م aa ء u"
+    ]
+   ],
+   "planted": "ء a م i ء a م i"
+  },
+  {
+   "ayah": "90:12",
+   "type": "inserted_syllable",
+   "word": 1,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     0,
+     "deviant",
+     "و a م aa ء a"
+    ]
+   ],
+   "planted": "ء a ء a د ر aa ك a"
+  },
+  {
+   "ayah": "94:1",
+   "type": "inserted_syllable",
+   "word": 1,
+   "exact": false,
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     0,
+     "deviant",
+     "ء a ل a م ن a"
+    ]
+   ],
+   "planted": "ن a ن a ش ر a ح"
+  }
+ ],
+ "readback_differs": [
+  {
+   "ayah": "2:2",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ذ aa ل i ك a",
+   "spelled": "ذَالِكَا"
+  },
+  {
+   "ayah": "2:115",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ل i لّ aa ه i",
+   "spelled": "وَلِلَّهِ"
+  },
+  {
+   "ayah": "2:143",
+   "type": "long_short",
+   "word": 34,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه u",
+   "spelled": "ٱللَّهُ"
+  },
+  {
+   "ayah": "2:197",
+   "type": "long_short",
+   "word": 19,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي a ع ل a م ه u",
+   "spelled": "يَعْلَمْهُو"
+  },
+  {
+   "ayah": "2:207",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a م i ن a",
+   "spelled": "وَمِنَا"
+  },
+  {
+   "ayah": "2:214",
+   "type": "long_short",
+   "word": 28,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّهِ"
+  },
+  {
+   "ayah": "2:275",
+   "type": "long_short",
+   "word": 11,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "2:276",
+   "type": "long_short",
+   "word": 10,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء a ث",
+   "spelled": "أَثٍ"
+  },
+  {
+   "ayah": "2:282",
+   "type": "long_short",
+   "word": 37,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ع a ل a ي ه i",
+   "spelled": "عَلَيْهِي"
+  },
+  {
+   "ayah": "3:2",
+   "type": "long_short",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ه u و a",
+   "spelled": "هُوَا"
+  },
+  {
+   "ayah": "3:18",
+   "type": "long_short",
+   "word": 16,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل ع a ز ii ز u",
+   "spelled": "ٱلْعَزِيزُو"
+  },
+  {
+   "ayah": "3:33",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء i نّ a",
+   "spelled": "إِنَّا"
+  },
+  {
+   "ayah": "3:60",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:مّ i ن a",
+   "spelled": "مِّنَا"
+  },
+  {
+   "ayah": "3:103",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّهِ"
+  },
+  {
+   "ayah": "3:105",
+   "type": "inserted_syllable",
+   "word": 13,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ع a ظ ii ي",
+   "spelled": "عَظِييٌ"
+  },
+  {
+   "ayah": "3:109",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ل i لّ aa ه i",
+   "spelled": "وَلِلَّهِ"
+  },
+  {
+   "ayah": "3:159",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:مّ i ن a",
+   "spelled": "مِّنَا"
+  },
+  {
+   "ayah": "3:178",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي a ح س a ب a نّ a",
+   "spelled": "يَحْسَبَنَّا"
+  },
+  {
+   "ayah": "3:185",
+   "type": "long_short",
+   "word": 7,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي a و م a",
+   "spelled": "يَوْمَا"
+  },
+  {
+   "ayah": "4:13",
+   "type": "long_short",
+   "word": 16,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل ف a و ز u",
+   "spelled": "ٱلْفَوْزُو"
+  },
+  {
+   "ayah": "4:39",
+   "type": "long_short",
+   "word": 11,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ك aa ن a",
+   "spelled": "وَكَانَا"
+  },
+  {
+   "ayah": "4:59",
+   "type": "long_short",
+   "word": 16,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّهِ"
+  },
+  {
+   "ayah": "4:90",
+   "type": "long_short",
+   "word": 18,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ش aa ء a",
+   "spelled": "شَاءَا"
+  },
+  {
+   "ayah": "4:97",
+   "type": "long_short",
+   "word": 18,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّهِ"
+  },
+  {
+   "ayah": "4:110",
+   "type": "long_short",
+   "word": 8,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه a",
+   "spelled": "ٱللَّهَ"
+  },
+  {
+   "ayah": "4:125",
+   "type": "long_short",
+   "word": 6,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل i لّ aa ه i",
+   "spelled": "لِلَّهِ"
+  },
+  {
+   "ayah": "4:139",
+   "type": "long_short",
+   "word": 10,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ف a ء i نّ a",
+   "spelled": "فَئِنَّا"
+  },
+  {
+   "ayah": "4:157",
+   "type": "long_short",
+   "word": 17,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ a ذ ii ن a",
+   "spelled": "لَّذِينَا"
+  },
+  {
+   "ayah": "5:20",
+   "type": "long_short",
+   "word": 20,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:مّ i ن a",
+   "spelled": "مِّنَا"
+  },
+  {
+   "ayah": "5:56",
+   "type": "long_short",
+   "word": 7,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ح i ز ب a",
+   "spelled": "حِزْبَا"
+  },
+  {
+   "ayah": "6:62",
+   "type": "long_short",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م a و ل aa ه u م u",
+   "spelled": "مَوْلَاهُمُو"
+  },
+  {
+   "ayah": "6:148",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه u",
+   "spelled": "ٱللَّهُ"
+  },
+  {
+   "ayah": "6:162",
+   "type": "long_short",
+   "word": 7,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ر a بّ i",
+   "spelled": "رَبِّي"
+  },
+  {
+   "ayah": "7:16",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ص i ر aa ط a ك a",
+   "spelled": "صِرَاطَكَا"
+  },
+  {
+   "ayah": "7:83",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "7:113",
+   "type": "long_short",
+   "word": 9,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ن a ح ن u",
+   "spelled": "نَحْنُو"
+  },
+  {
+   "ayah": "7:134",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ع a ل a ي ه i م u",
+   "spelled": "عَلَيْهِمُو"
+  },
+  {
+   "ayah": "7:155",
+   "type": "long_short",
+   "word": 7,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء a خ a ذ a ت ه u م u",
+   "spelled": "أَخَذَتْهُمُو"
+  },
+  {
+   "ayah": "7:196",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ل i يّ i ي a",
+   "spelled": "وَلِيِّيَى"
+  },
+  {
+   "ayah": "8:25",
+   "type": "inserted_syllable",
+   "word": 6,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن م a ك u م",
+   "spelled": "مِنمَكُمْ"
+  },
+  {
+   "ayah": "8:28",
+   "type": "inserted_syllable",
+   "word": 9,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ع a ظ ii ر",
+   "spelled": "عَظِيرٌ"
+  },
+  {
+   "ayah": "9:4",
+   "type": "long_short",
+   "word": 18,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء i نّ a",
+   "spelled": "إِنَّا"
+  },
+  {
+   "ayah": "9:22",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء i نّ a",
+   "spelled": "إِنَّا"
+  },
+  {
+   "ayah": "9:30",
+   "type": "long_short",
+   "word": 20,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه u",
+   "spelled": "ٱللَّهُ"
+  },
+  {
+   "ayah": "9:44",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ل ي a و م i",
+   "spelled": "وَلْيَوْمِي"
+  },
+  {
+   "ayah": "9:64",
+   "type": "long_short",
+   "word": 10,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ق u ل i",
+   "spelled": "قُلِي"
+  },
+  {
+   "ayah": "9:72",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ع a د a",
+   "spelled": "وَعَدَا"
+  },
+  {
+   "ayah": "9:85",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي u ر ii د u",
+   "spelled": "يُرِيدُو"
+  },
+  {
+   "ayah": "9:107",
+   "type": "long_short",
+   "word": 10,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ح aa ر a ب a",
+   "spelled": "حَارَبَا"
+  },
+  {
+   "ayah": "9:129",
+   "type": "long_short",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه u",
+   "spelled": "ٱللَّهُ"
+  },
+  {
+   "ayah": "10:1",
+   "type": "inserted_syllable",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل aa م",
+   "spelled": "تِلْمَكَ"
+  },
+  {
+   "ayah": "10:1",
+   "type": "vowel_swap",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ت i ل ك a",
+   "spelled": "ٱلْكِتَابُ"
+  },
+  {
+   "ayah": "10:1",
+   "type": "consonant_swap",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء aa ي aa ت u",
+   "spelled": "ٱلْخَكِيمْ"
+  },
+  {
+   "ayah": "10:72",
+   "type": "long_short",
+   "word": 10,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّهِ"
+  },
+  {
+   "ayah": "10:86",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل ق a و م i",
+   "spelled": "ٱلْقَوْمِي"
+  },
+  {
+   "ayah": "11:1",
+   "type": "inserted_syllable",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ك i ت aa ب u ن",
+   "spelled": "ءَاعُيَاتُهُو"
+  },
+  {
+   "ayah": "11:1",
+   "type": "vowel_swap",
+   "word": 8,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i",
+   "spelled": "حِكِيمٍ"
+  },
+  {
+   "ayah": "11:24",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م a ث a ل u",
+   "spelled": "مَثَلُو"
+  },
+  {
+   "ayah": "11:54",
+   "type": "long_short",
+   "word": 9,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء u ش ه i د u",
+   "spelled": "أُشْهِدُو"
+  },
+  {
+   "ayah": "11:74",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ج aa ء a ت ه u",
+   "spelled": "وَجَاءَتْهُو"
+  },
+  {
+   "ayah": "11:115",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ف a ء i نّ a",
+   "spelled": "فَئِنَّا"
+  },
+  {
+   "ayah": "11:123",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:غ a ي ب u",
+   "spelled": "غَيْبُو"
+  },
+  {
+   "ayah": "12:1",
+   "type": "inserted_syllable",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ر aa",
+   "spelled": "ءَازِيَاتُ"
+  },
+  {
+   "ayah": "12:81",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء i نّ a",
+   "spelled": "إِنَّا"
+  },
+  {
+   "ayah": "13:1",
+   "type": "long_short",
+   "word": 12,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل ح a قّ u",
+   "spelled": "ٱلنَّسِ"
+  },
+  {
+   "ayah": "13:1",
+   "type": "shadda_drop",
+   "word": 8,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء u ں ز i ل a",
+   "spelled": "رَّبِكَ"
+  },
+  {
+   "ayah": "13:15",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ل i لّ aa ه i",
+   "spelled": "وَلِلَّهِ"
+  },
+  {
+   "ayah": "13:28",
+   "type": "long_short",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ب i ذ i ك ر i",
+   "spelled": "بِذِكْرِي"
+  },
+  {
+   "ayah": "14:1",
+   "type": "consonant_swap",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ك i ت aa ب u ن",
+   "spelled": "إِلَيْقَ"
+  },
+  {
+   "ayah": "14:1",
+   "type": "long_short",
+   "word": 6,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل i ت u خ ر i ج a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "14:1",
+   "type": "shadda_drop",
+   "word": 11,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:نّ uu ر i",
+   "spelled": "رَبِهِمْ"
+  },
+  {
+   "ayah": "14:28",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ن i ع م a ت a",
+   "spelled": "نِعْمَتَا"
+  },
+  {
+   "ayah": "14:48",
+   "type": "long_short",
+   "word": 7,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل i لّ aa ه i",
+   "spelled": "لِلَّهِ"
+  },
+  {
+   "ayah": "15:1",
+   "type": "vowel_swap",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ت i ل ك a",
+   "spelled": "ٱلْكُتَابِ"
+  },
+  {
+   "ayah": "15:1",
+   "type": "consonant_swap",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ر aa",
+   "spelled": "عَايَاتُ"
+  },
+  {
+   "ayah": "15:1",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل ك i ت aa ب i",
+   "spelled": "مُّبٍ"
+  },
+  {
+   "ayah": "15:50",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ه u و a",
+   "spelled": "هُوَا"
+  },
+  {
+   "ayah": "15:86",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل خ a لّ aa ق u",
+   "spelled": "ٱلْخَلَّاقُو"
+  },
+  {
+   "ayah": "16:44",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء i ل a ي ك a",
+   "spelled": "إِلَيْكَا"
+  },
+  {
+   "ayah": "16:65",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "16:73",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:د uu ن i",
+   "spelled": "دُونِي"
+  },
+  {
+   "ayah": "16:95",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ب i ع a ه د i",
+   "spelled": "بِعَهْدِي"
+  },
+  {
+   "ayah": "16:107",
+   "type": "long_short",
+   "word": 7,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ء a نّ a",
+   "spelled": "وَأَنَّا"
+  },
+  {
+   "ayah": "16:119",
+   "type": "inserted_syllable",
+   "word": 18,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:رّ a ح ii ح",
+   "spelled": "رَّحِيحٌ"
+  },
+  {
+   "ayah": "17:61",
+   "type": "long_short",
+   "word": 12,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ط ii ن",
+   "spelled": "طِينَ"
+  },
+  {
+   "ayah": "18:4",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ي u ں ذ i ر a",
+   "spelled": "وَيُنذِرَا"
+  },
+  {
+   "ayah": "18:38",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ه u و a",
+   "spelled": "هُوَا"
+  },
+  {
+   "ayah": "18:101",
+   "type": "long_short",
+   "word": 10,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:س a م ع",
+   "spelled": "سَمْعَ"
+  },
+  {
+   "ayah": "18:104",
+   "type": "long_short",
+   "word": 10,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ص u ن ع",
+   "spelled": "صُنْعَ"
+  },
+  {
+   "ayah": "19:18",
+   "type": "long_short",
+   "word": 7,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ت a ق i يّ",
+   "spelled": "تَقِيَّ"
+  },
+  {
+   "ayah": "19:20",
+   "type": "long_short",
+   "word": 10,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ب a غ i يّ",
+   "spelled": "بَغِيَّ"
+  },
+  {
+   "ayah": "19:25",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ب i ج i ذ ع i",
+   "spelled": "بِجِذْعِي"
+  },
+  {
+   "ayah": "19:41",
+   "type": "long_short",
+   "word": 7,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:نّ a ب i يّ",
+   "spelled": "نَّبِيَّ"
+  },
+  {
+   "ayah": "19:49",
+   "type": "long_short",
+   "word": 6,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّهِ"
+  },
+  {
+   "ayah": "19:74",
+   "type": "long_short",
+   "word": 8,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ر i ء ي",
+   "spelled": "وَرِئْيَ"
+  },
+  {
+   "ayah": "20:5",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل ع a ر ش i",
+   "spelled": "ٱلْعَرْشِي"
+  },
+  {
+   "ayah": "20:113",
+   "type": "long_short",
+   "word": 6,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "20:120",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء i ل a ي ه i",
+   "spelled": "إِلَيْهِي"
+  },
+  {
+   "ayah": "21:77",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "21:86",
+   "type": "long_short",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:مّ i ن a",
+   "spelled": "مِّنَا"
+  },
+  {
+   "ayah": "22:35",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه u",
+   "spelled": "ٱللَّهُ"
+  },
+  {
+   "ayah": "22:64",
+   "type": "long_short",
+   "word": 10,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل غ a ن i يّ u",
+   "spelled": "ٱلْغَنِيُّو"
+  },
+  {
+   "ayah": "23:45",
+   "type": "long_short",
+   "word": 7,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:مّ u ب",
+   "spelled": "مُّبٍ"
+  },
+  {
+   "ayah": "23:73",
+   "type": "long_short",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:مّ u س ت a ق",
+   "spelled": "مُّسْتَقٍ"
+  },
+  {
+   "ayah": "23:86",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:رّ a بّ u",
+   "spelled": "رَّبُّو"
+  },
+  {
+   "ayah": "23:114",
+   "type": "consonant_swap",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ a ب i تّ u م",
+   "spelled": "لَّبِتُّمْ"
+  },
+  {
+   "ayah": "23:116",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه u",
+   "spelled": "ٱللَّهُ"
+  },
+  {
+   "ayah": "25:4",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ق aa ل a",
+   "spelled": "وَقَالَا"
+  },
+  {
+   "ayah": "25:10",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ت a ب aa ر a ك a",
+   "spelled": "تَبَارَكَا"
+  },
+  {
+   "ayah": "25:40",
+   "type": "long_short",
+   "word": 6,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م a ط a ر a",
+   "spelled": "مَطَرَا"
+  },
+  {
+   "ayah": "25:41",
+   "type": "long_short",
+   "word": 8,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ب a ع a ث a",
+   "spelled": "بَعَثَا"
+  },
+  {
+   "ayah": "26:21",
+   "type": "long_short",
+   "word": 9,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "26:102",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "26:126",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه a",
+   "spelled": "ٱللَّهَ"
+  },
+  {
+   "ayah": "26:144",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه a",
+   "spelled": "ٱللَّهَ"
+  },
+  {
+   "ayah": "26:179",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه a",
+   "spelled": "ٱللَّهَ"
+  },
+  {
+   "ayah": "26:193",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ب i ه i",
+   "spelled": "بِهِي"
+  },
+  {
+   "ayah": "26:224",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي a تّ a ب i ع u ه u م u",
+   "spelled": "يَتَّبِعُهُمُو"
+  },
+  {
+   "ayah": "27:1",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:س ii ں",
+   "spelled": "تِلْكَا"
+  },
+  {
+   "ayah": "27:55",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:د uu ن i",
+   "spelled": "دُونِي"
+  },
+  {
+   "ayah": "27:92",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء a ت ل u و a",
+   "spelled": "أَتْلُوَا"
+  },
+  {
+   "ayah": "28:85",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ع a ل a ي ك a",
+   "spelled": "عَلَيْكَا"
+  },
+  {
+   "ayah": "29:44",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:خ a ل a ق a",
+   "spelled": "خَلَقَا"
+  },
+  {
+   "ayah": "29:49",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ص u د uu ر i",
+   "spelled": "صُدُورِي"
+  },
+  {
+   "ayah": "30:18",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ل a ه u",
+   "spelled": "وَلَهُو"
+  },
+  {
+   "ayah": "30:50",
+   "type": "long_short",
+   "word": 6,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي u ح ي i",
+   "spelled": "يُحْيِي"
+  },
+  {
+   "ayah": "30:58",
+   "type": "consonant_swap",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:دّ a ر a ب ن aa",
+   "spelled": "دَرَبْنَا"
+  },
+  {
+   "ayah": "31:26",
+   "type": "long_short",
+   "word": 6,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه a",
+   "spelled": "ٱللَّهَ"
+  },
+  {
+   "ayah": "32:5",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "33:70",
+   "type": "long_short",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه a",
+   "spelled": "ٱللَّهَ"
+  },
+  {
+   "ayah": "34:23",
+   "type": "inserted_syllable",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ع i ن خ i د a ه uu",
+   "spelled": "عِنخِدَهُو"
+  },
+  {
+   "ayah": "34:27",
+   "type": "long_short",
+   "word": 9,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه u",
+   "spelled": "ٱللَّهُ"
+  },
+  {
+   "ayah": "35:28",
+   "type": "long_short",
+   "word": 14,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه a",
+   "spelled": "ٱللَّهَ"
+  },
+  {
+   "ayah": "37:49",
+   "type": "inserted_syllable",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:مّ a ك ن uu ز",
+   "spelled": "مَّكْنُوزٌ"
+  },
+  {
+   "ayah": "37:57",
+   "type": "long_short",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "37:86",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّهِ"
+  },
+  {
+   "ayah": "37:148",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ح",
+   "spelled": "حٍ"
+  },
+  {
+   "ayah": "38:74",
+   "type": "long_short",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "38:81",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي a و م i",
+   "spelled": "يَوْمِي"
+  },
+  {
+   "ayah": "39:3",
+   "type": "long_short",
+   "word": 16,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء i نّ a",
+   "spelled": "إِنَّا"
+  },
+  {
+   "ayah": "39:11",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه a",
+   "spelled": "ٱللَّهَ"
+  },
+  {
+   "ayah": "39:59",
+   "type": "inserted_syllable",
+   "word": 7,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ك u ن م i ت a",
+   "spelled": "وَكُنمِتَ"
+  },
+  {
+   "ayah": "40:48",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ق aa ل a",
+   "spelled": "قَالَا"
+  },
+  {
+   "ayah": "41:29",
+   "type": "long_short",
+   "word": 14,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "41:44",
+   "type": "shadda_drop",
+   "word": 8,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "engine_refused:AssertionError",
+   "spelled": "أَأَعْجَمِيُ"
+  },
+  {
+   "ayah": "42:15",
+   "type": "consonant_swap",
+   "word": 6,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ت a تّ a ب i",
+   "spelled": "تَتَّبِئْ"
+  },
+  {
+   "ayah": "42:44",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي u ض ل i ل i",
+   "spelled": "يُضْلِلِي"
+  },
+  {
+   "ayah": "43:37",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ع a ن i",
+   "spelled": "عَنِي"
+  },
+  {
+   "ayah": "43:49",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:سّ aa ح i ر u",
+   "spelled": "ٱلسَّاحِرُو"
+  },
+  {
+   "ayah": "44:51",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء i نّ a",
+   "spelled": "إِنَّا"
+  },
+  {
+   "ayah": "45:23",
+   "type": "long_short",
+   "word": 20,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ب a ع د i",
+   "spelled": "بَعْدِي"
+  },
+  {
+   "ayah": "45:37",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ل a ه u",
+   "spelled": "وَلَهُو"
+  },
+  {
+   "ayah": "46:31",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّهِ"
+  },
+  {
+   "ayah": "47:28",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ب i ء a نّ a ه u م u",
+   "spelled": "بِئَنَّهُمُو"
+  },
+  {
+   "ayah": "47:33",
+   "type": "long_short",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه a",
+   "spelled": "ٱللَّهَ"
+  },
+  {
+   "ayah": "48:7",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ل i لّ aa ه i",
+   "spelled": "وَلِلَّهِ"
+  },
+  {
+   "ayah": "50:1",
+   "type": "consonant_swap",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "engine_refused:DecodeError",
+   "spelled": "كَافْ"
+  },
+  {
+   "ayah": "50:1",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "engine_refused:DecodeError",
+   "spelled": "قَفْ"
+  },
+  {
+   "ayah": "50:4",
+   "type": "inserted_syllable",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ت a ن ء u ق u ص u",
+   "spelled": "تَنؤُقُصُ"
+  },
+  {
+   "ayah": "50:42",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي a س م a ع uu ن a",
+   "spelled": "يَسْمَعُونَا"
+  },
+  {
+   "ayah": "51:4",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء a م ر",
+   "spelled": "أَمْرَ"
+  },
+  {
+   "ayah": "52:5",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a سّ a ق ف i",
+   "spelled": "وَسَّقْفِي"
+  },
+  {
+   "ayah": "52:10",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ت a س ii ر u",
+   "spelled": "وَتَسِيرُو"
+  },
+  {
+   "ayah": "52:37",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ه u م u",
+   "spelled": "هُمُو"
+  },
+  {
+   "ayah": "53:6",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ف a س ت a و",
+   "spelled": "فَسْتَوَ"
+  },
+  {
+   "ayah": "53:25",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ف a ل i لّ aa ه i",
+   "spelled": "فَلِلَّهِ"
+  },
+  {
+   "ayah": "53:53",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء a ه و",
+   "spelled": "أَهْوَ"
+  },
+  {
+   "ayah": "56:41",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء a ص ح aa ب u",
+   "spelled": "أَصْحَابُو"
+  },
+  {
+   "ayah": "56:51",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ضّ aa لّ uu ن a",
+   "spelled": "ٱلضَّالُّونَا"
+  },
+  {
+   "ayah": "56:93",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ح a م",
+   "spelled": "حَمٍ"
+  },
+  {
+   "ayah": "57:16",
+   "type": "long_short",
+   "word": 8,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّهِ"
+  },
+  {
+   "ayah": "57:24",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ي a ء م u ر uu ن a",
+   "spelled": "وَيَأْمُرُونَا"
+  },
+  {
+   "ayah": "59:4",
+   "type": "long_short",
+   "word": 9,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه a",
+   "spelled": "ٱللَّهَ"
+  },
+  {
+   "ayah": "59:23",
+   "type": "long_short",
+   "word": 6,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ه u و a",
+   "spelled": "هُوَا"
+  },
+  {
+   "ayah": "61:7",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّهِ"
+  },
+  {
+   "ayah": "62:11",
+   "type": "consonant_swap",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:نّ ف a دّ uu",
+   "spelled": "نفَدُّو"
+  },
+  {
+   "ayah": "65:2",
+   "type": "long_short",
+   "word": 14,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل i لّ aa ه i",
+   "spelled": "لِلَّهِ"
+  },
+  {
+   "ayah": "66:11",
+   "type": "long_short",
+   "word": 21,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:م i ن a",
+   "spelled": "مِنَا"
+  },
+  {
+   "ayah": "67:18",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ك a ذّ a ب a",
+   "spelled": "كَذَّبَا"
+  },
+  {
+   "ayah": "67:24",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ه u و a",
+   "spelled": "هُوَا"
+  },
+  {
+   "ayah": "68:13",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ز a ن",
+   "spelled": "زَنٍ"
+  },
+  {
+   "ayah": "69:34",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ط a ع aa م i",
+   "spelled": "طَعَامِي"
+  },
+  {
+   "ayah": "69:43",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:رّ a بّ i",
+   "spelled": "رَّبِّي"
+  },
+  {
+   "ayah": "71:10",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ف a ق u ل ت u",
+   "spelled": "فَقُلْتُو"
+  },
+  {
+   "ayah": "72:18",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ء a نّ a",
+   "spelled": "وَأَنَّا"
+  },
+  {
+   "ayah": "72:23",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:مّ i ن a",
+   "spelled": "مِّنَا"
+  },
+  {
+   "ayah": "75:14",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ب a ل i",
+   "spelled": "بَلِي"
+  },
+  {
+   "ayah": "75:28",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء a نّ a ه u",
+   "spelled": "أَنَّهُو"
+  },
+  {
+   "ayah": "77:1",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ع u ر ف",
+   "spelled": "عُرْفَ"
+  },
+  {
+   "ayah": "77:13",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل i ي a و م i",
+   "spelled": "لِيَوْمِي"
+  },
+  {
+   "ayah": "77:21",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:مّ a ك",
+   "spelled": "مَّكٍ"
+  },
+  {
+   "ayah": "78:17",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي a و م a",
+   "spelled": "يَوْمَا"
+  },
+  {
+   "ayah": "78:24",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ش a ر aa ب",
+   "spelled": "شَرَابَ"
+  },
+  {
+   "ayah": "78:29",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ك i ت aa ب",
+   "spelled": "كِتَابَ"
+  },
+  {
+   "ayah": "79:23",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ف a ن aa د",
+   "spelled": "فَنَادَ"
+  },
+  {
+   "ayah": "79:36",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي a ر",
+   "spelled": "يَرَ"
+  },
+  {
+   "ayah": "79:43",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ذ i ك ر aa ه",
+   "spelled": "ذِكْرَاهَ"
+  },
+  {
+   "ayah": "80:5",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:س ت a غ ن",
+   "spelled": "ٱسْتَغْنَ"
+  },
+  {
+   "ayah": "80:10",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ت a ل a هّ",
+   "spelled": "تَلَهَّ"
+  },
+  {
+   "ayah": "81:21",
+   "type": "inserted_syllable",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء a م ii و",
+   "spelled": "أَمِيوٍ"
+  },
+  {
+   "ayah": "82:13",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ن a ع",
+   "spelled": "نَعٍ"
+  },
+  {
+   "ayah": "83:20",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:مّ a ر ق",
+   "spelled": "مَّرْقٌ"
+  },
+  {
+   "ayah": "84:1",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:سّ a م aa ء u",
+   "spelled": "ٱلسَّمَاؤُو"
+  },
+  {
+   "ayah": "85:15",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل ع a ر ش i",
+   "spelled": "ٱلْعَرْشِي"
+  },
+  {
+   "ayah": "86:11",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ذ aa ت i",
+   "spelled": "ذَاتِي"
+  },
+  {
+   "ayah": "86:17",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ر u و a ي د",
+   "spelled": "رُوَيْدَ"
+  },
+  {
+   "ayah": "87:12",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:نّ aa ر a",
+   "spelled": "ٱلنَّارَا"
+  },
+  {
+   "ayah": "87:18",
+   "type": "long_short",
+   "word": 4,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل ء uu ل",
+   "spelled": "ٱلْأُولَ"
+  },
+  {
+   "ayah": "89:21",
+   "type": "long_short",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:د u كّ a ت i",
+   "spelled": "دُكَّتِي"
+  },
+  {
+   "ayah": "90:4",
+   "type": "inserted_syllable",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل ء i ن غ u س aa ن a",
+   "spelled": "ٱلْإِنغُسَانَ"
+  },
+  {
+   "ayah": "91:13",
+   "type": "long_short",
+   "word": 5,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّهِ"
+  },
+  {
+   "ayah": "92:3",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:و a ل ء u ں ث",
+   "spelled": "وَلْؤُنثَ"
+  },
+  {
+   "ayah": "92:21",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ي a ر ض",
+   "spelled": "يَرْضَ"
+  },
+  {
+   "ayah": "94:7",
+   "type": "inserted_syllable",
+   "word": 2,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ف a ن ه a ص a ب",
+   "spelled": "فَنهَصَبْ"
+  },
+  {
+   "ayah": "95:3",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل ب a ل a د i",
+   "spelled": "ٱلْبَلَدِي"
+  },
+  {
+   "ayah": "96:5",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ع a لّ a م a",
+   "spelled": "عَلَّمَا"
+  },
+  {
+   "ayah": "96:6",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء i نّ a",
+   "spelled": "إِنَّا"
+  },
+  {
+   "ayah": "96:14",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه a",
+   "spelled": "ٱللَّهَ"
+  },
+  {
+   "ayah": "98:7",
+   "type": "long_short",
+   "word": 0,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ء i نّ a",
+   "spelled": "إِنَّا"
+  },
+  {
+   "ayah": "98:8",
+   "type": "long_short",
+   "word": 13,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه u",
+   "spelled": "ٱللَّهُ"
+  },
+  {
+   "ayah": "99:3",
+   "type": "long_short",
+   "word": 3,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ل a ه",
+   "spelled": "لَهَ"
+  },
+  {
+   "ayah": "104:6",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:لّ aa ه i",
+   "spelled": "ٱللَّاهِي"
+  },
+  {
+   "ayah": "114:4",
+   "type": "long_short",
+   "word": 1,
+   "exact": true,
+   "tp": 1,
+   "fp": 0,
+   "fn": 0,
+   "readback": "differs:ش a رّ i",
+   "spelled": "شَرِّي"
+  }
+ ]
+}

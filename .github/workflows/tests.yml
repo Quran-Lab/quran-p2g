@@ -1,0 +1,28 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.10", "3.11", "3.12"]
+        exclude:
+          - os: windows-latest
+            python: "3.11"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: install
+        run: python -m pip install -e ".[dev]"
+      - name: test
+        run: python -X utf8 -m pytest -q
+      - name: cli smoke
+        run: python -X utf8 -m quran_p2g.cli text "ب i س م i ل aa ه i ر a ح م aa ن i ر a ح ii م" --ayah 1:1
