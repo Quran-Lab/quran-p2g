@@ -1,4 +1,4 @@
-from quran_p2g.align import INS, align
+from quran_p2g.align import INS, align, repeat_cost, skip_cost
 
 IB, WA, Q = "ibtida", "wasl", "waqf"
 
@@ -48,7 +48,7 @@ def test_skipped_word():
     T, S = simple("ك a", "ت a ب a", "د i")
     al = align("ك a د i".split(), T, S, "tj3")
     assert al.words[1].skipped and al.words[1].j0 == al.words[1].j1
-    assert al.cost == 3 * 4
+    assert al.cost == skip_cost(4) == 9
 
 
 def test_repeat_is_an_insertion():
@@ -56,7 +56,7 @@ def test_repeat_is_an_insertion():
     al = align("ك a ت a ك a ت a ب a ب a".split(), T, S, "tj3")
     assert [(x.kind, x.of_word, x.j0, x.j1) for x in al.insertions] == [("repeat", 0, 4, 8)]
     assert all(w.j1 - w.j0 == 4 for w in al.words)
-    assert al.cost == 2 * 4 + 2
+    assert al.cost == repeat_cost(4) == 9
 
 
 def test_repeats_can_be_disabled():

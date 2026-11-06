@@ -4,6 +4,8 @@
   "top1_strict_pct": 97.07,
   "top1_same_text_pct": 100.0,
   "top1_contains_pct": 97.07,
+  "top1_same_text_or_range_pct": 100.0,
+  "top1_strict": 6053,
   "misses": []
  },
  "agg18k_t1p_panel_correct_test": {
@@ -11,6 +13,8 @@
   "top1_strict_pct": 91.5,
   "top1_same_text_pct": 99.95,
   "top1_contains_pct": 91.55,
+  "top1_same_text_or_range_pct": 100.0,
+  "top1_strict": 1689,
   "misses": [
    {
     "ayah": "86:11",
@@ -19,11 +23,12 @@
     "margin": 0.1535,
     "strict": false,
     "same_text": false,
-    "contains": true
+    "contains": true,
+    "same_or_range": true
    }
   ]
  },
- "seconds": 56.7,
+ "seconds": 28.8,
  "identical_text_groups": {
   "1": 5954,
   "2": 81,
@@ -35,5 +40,10 @@
   "8": 2,
   "11": 1,
   "31": 1
+ },
+ "canonical_strict_ceiling": {
+  "ayat": 6236,
+  "answerable_exactly": 6053,
+  "pct": 97.07
  }
 }

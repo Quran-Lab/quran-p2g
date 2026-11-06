@@ -353,7 +353,8 @@ def _build(hyp, fmt, words, preps, al, ayat, n_pre, ref, retrieval):
             r = WordResult(ay.key, ti, ay.uthmani[ti], _imlaei_of(ay, ti), status, ph, exp, form)
             if status == "deviant":
                 r.level, r.edits = deviation_level(core_e, core_s)
-                r.spelling = spell_core(core_s, ay.uthmani[ti], geminates_known=fmt in ("tj3g", "units"))
+                r.spelling = spell_core(core_s, ay.uthmani[ti], geminates_known=fmt in ("tj3g", "units"),
+                                        waqf=form["right"] == "waqf")
             r.text = "" if status == "deleted" else (
                 r.uthmani if status == "match" or r.level == "tajweed" else r.spelling.diacritized)
             results.append(r)

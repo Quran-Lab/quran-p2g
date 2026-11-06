@@ -17,8 +17,21 @@ An edit that turns the word into another of its legal forms is redrawn. Only Uth
 edited (a muqatta'at word holds several). Expected: the edited word deviant (skip: deleted; repeat: one inserted
 repeat of that word and every word a match), every other word a match, nothing else inserted.
 
+Exact (strict): the output is exactly the planted statuses. Exact up to an equivalent attribution: the output is the
+planted statuses of another attribution proven equally valid (tools/g2_equiv.py: the same edit on another word gives the
+identical phone string, or the planted attribution and the output cost the same). Both numbers are reported.
+
 Spelling read-back (substitution-type edits): the spelled word replaces the word in the ayah text, quran-g2p reads the
-ayah (canonical stops), and that word's tokens must equal the planted tokens.
+ayah (canonical stops: ibtida, wasl inside, waqf at the end, so the same neighbours and the same boundary states as the
+planted reading), and that word's tokens must equal the planted tokens. A difference that a named reading rule of
+quran-g2p forces whatever is written is classified with the rule (and, where a stop removes the context, verified by
+reading the word again with a stop after it):
+
+  long_vowel_before_cluster  a word-final long vowel is shortened before a word that starts with a cluster (wasl);
+                             with a stop after the word, the spelling reads back long
+  allah_madd                 the madd of the name of Allah is read long whatever is written
+  ikhfa_before_non_ikhfa     the ikhfa nasal exists only before the 15 ikhfa letters; written as a bare noon before any
+                             other letter it is read by that letter's noon rule
 """
 from __future__ import annotations
 
@@ -40,6 +53,8 @@ CONF = collections.defaultdict(list)
 for x, y in PAIRS:
     CONF[x].append(y)
     CONF[y].append(x)
+IKHFA = "\u06ba"
+IKHFA_LETTERS = set("\u0635\u0630\u062b\u0643\u062c\u0634\u0642\u0633\u062f\u0637\u0632\u0641\u062a\u0636\u0638")
 TYPES_G = ["vowel_swap", "consonant_swap", "long_short", "shadda_drop", "word_skip", "word_repeat", "inserted_syllable"]
 CONS = list("ءبتثجحخدذرزسشصضطظعغفقكلمنهوي")
 G2P = None
@@ -49,6 +64,7 @@ def _setup(g2p):
     global G2P
     G2P = g2p
     sys.path.insert(0, os.path.join(HERE, "..", "src"))
+    sys.path.insert(0, HERE)
     if g2p:
         sys.path.insert(0, os.path.join(g2p, "src"))
 
@@ -118,6 +134,8 @@ def plant(rng, typ, toks):
 def run_ayah(job):
     key, fmt, n_cases, seed, readback = job
     import quran_p2g as p2g
+    from quran_p2g.convert import _prep
+    import g2_equiv as EQ
     s, a = key
     q = p2g.quran()
     ay = q.ayah(s, a)
@@ -154,52 +172,143 @@ def run_ayah(job):
         words = r.words
         flagged = {w.index for w in words if w.status != "match"}
         ins = r.insertions
-        if typ == "word_repeat":
-            exact = not flagged and len(ins) == 1 and ins[0].kind == "repeat" and ins[0].of == f"{s}:{a}:{ti}"
-            truth_units, pred_units = {"ins"}, set(flagged) | ({"ins"} if ins else set())
-        else:
-            want = "deleted" if typ == "word_skip" else "deviant"
-            exact = flagged == {ti} and not ins and words[ti].status == want
-            truth_units, pred_units = {ti}, set(flagged) | ({"ins"} if ins else set())
-        rec = {"ayah": f"{s}:{a}", "type": typ, "word": ti, "exact": exact,
+        exact = EQ.statuses_match(r, typ, ti, f"{s}:{a}")
+        truth_units = {"ins"} if typ == "word_repeat" else {ti}
+        pred_units = set(flagged) | ({"ins"} if ins else set())
+        rec = {"ayah": f"{s}:{a}", "type": typ, "word": ti, "exact": exact, "equiv": None,
                "tp": len(truth_units & pred_units), "fp": len(pred_units - truth_units),
                "fn": len(truth_units - pred_units)}
         if not exact:
+            alts = EQ.same_string_alternatives(cw, k, typ, new)
+            hit = [j for j in alts if EQ.statuses_match(r, typ, j, f"{s}:{a}")]
+            toks_k, states_k, _ = _prep(ay.words[k], fmt)
+            c_planted = EQ.planted_cost(toks_k, states_k, k, len(cw), typ, cw[k][0], new, fmt)
+            if hit:
+                rec["equiv"] = "same_string"
+                truth_units = {"ins"} if typ == "word_repeat" else {hit[0]}
+            elif c_planted == r.cost:
+                rec["equiv"] = "equal_cost"
+                truth_units = pred_units
             rec["got"] = [[w.index, w.status, " ".join(w.phones)] for w in words if w.status != "match"] + \
-                         [["ins", x.kind, " ".join(x.phones)] for x in ins]
+                         [["ins", x.kind, " ".join(x.phones), x.of] for x in ins]
             rec["planted"] = " ".join(new)
+            rec["same_string_words"] = alts
+            rec["cost_planted"], rec["cost_output"] = c_planted, r.cost
+        # precision / recall up to the equivalence: against the units of the attribution the output is equal to
+        rec["tp_eq"] = len(truth_units & pred_units)
+        rec["fp_eq"] = len(pred_units - truth_units)
+        rec["fn_eq"] = len(truth_units - pred_units)
         if readback and typ not in ("word_skip", "word_repeat") and words[ti].status == "deviant":
-            rec["readback"] = _readback(s, a, ay, ti, words[ti].spelling.diacritized, new, fmt)
+            rb, got_rb = _readback(q, s, a, ay, ti, words[ti].spelling.diacritized, new, fmt)
+            rec["readback"] = rb
             rec["spelled"] = words[ti].spelling.diacritized
+            if rb != "equal":
+                rec["readback_got"] = " ".join(got_rb)
+                rec["planted"] = " ".join(new)
         out.append(rec)
     return out
 
 
-_TB = None
-
-
-def _readback(s, a, ay, ti, spelled, planted, fmt):
-    """quran-g2p reads the ayah with the spelled word in place; that word's tokens vs the planted tokens."""
-    global _TB
-    try:
-        from quran_g2p import tokenlayer_tj3 as T3
-        from quran_g2p.phonemize import phonemize
-        from quran_g2p.textbank import AyahRef
-        words = list(ay.uthmani)
-        words[ti] = spelled
-        res = phonemize(" ".join(words), edition="tanzil", ref=AyahRef(s, a))
-        ph = [p for seg in res.segments for p in seg.phones if p.word_index == ti]
-        g = []
-        for p in ph:
+def _read(text, s, a, ref=True, stops=None):
+    """quran-g2p reads `text` (the ayah s:a, or any text without the reference) -> {lattice word: tj3g tokens}."""
+    from quran_g2p import tokenlayer_tj3 as T3
+    from quran_g2p.phonemize import phonemize
+    from quran_g2p.textbank import AyahRef
+    from quran_g2p.waqf import WaqfSpec
+    kw = {"waqf": WaqfSpec(tuple(stops))} if stops else {}
+    res = phonemize(text, edition="tanzil", ref=AyahRef(s, a) if ref else None, **kw)
+    out = collections.defaultdict(list)
+    for seg in res.segments:
+        for p in seg.phones:
+            g = out[p.word_index]
             n0 = len(g)
             T3._emit(g, p.base.value)
             if p.kind == "consonant" and p.geminated and len(g) > n0 and g[-1] in T3.CONSONANTS:
                 g[-1] += SHADDA
-        if fmt == "tj3":
-            g = [degem(x) for x in g]
-        return "equal" if g == list(planted) else "differs:" + " ".join(g)
+    return out
+
+
+def _fmt(toks, fmt):
+    return [degem(x) for x in toks] if fmt == "tj3" else list(toks)
+
+
+def _canon_form(lw, k, n):
+    L = "ibtida" if k == 0 else "wasl"
+    R = "waqf" if k == n - 1 else "wasl"
+    mode = "sukun" if R == "waqf" else "plain"
+    return next(f for f in lw.forms if f.left == L and f.right == R and f.mode == mode and f.wajh is None).tj3g.split()
+
+
+def _readback(q, s, a, ay, ti, spelled, planted, fmt):
+    """quran-g2p reads the ayah with the spelled word in place; that word's tokens vs the planted tokens.
+
+    -> (status, tokens read back). status: "equal"; "rule:<name>" (a named reading rule of quran-g2p forces the
+    difference whatever is written; verified by a second reading without the context where one exists);
+    "equal_without_reference" (quran-g2p refuses the spelling at a word its ayah reference pins, a muqatta'at letter
+    name or the tasheel of 41:44, and reads it as planted without the reference); "differs"; "engine_refused:<error>".
+    """
+    planted = list(planted)
+    words = list(ay.uthmani)
+    words[ti] = spelled
+    text = " ".join(words)
+    lat = sorted(lw.index for lw in ay.words if lw.text_index == ti)
+    n = len(ay.words)
+    pick = lambda m: [t for i in lat for t in m.get(i, [])]
+    try:
+        full = _read(text, s, a)
     except Exception as e:                       # the engine refuses the spelling (fail-closed decode)
-        return "engine_refused:" + type(e).__name__
+        try:
+            g = _fmt(pick(_read(text, s, a, ref=False)), fmt)
+        except Exception:
+            return "engine_refused:" + type(e).__name__, []
+        return ("equal_without_reference" if g == planted else "engine_refused:" + type(e).__name__), g
+    G = pick(full)
+    g = _fmt(G, fmt)
+    if g == planted:
+        return "equal", g
+    # long_vowel_before_cluster: only the final long vowel is shortened, and with a stop after the word it is long
+    if planted[-1] in ("aa", "ii", "uu") and g == planted[:-1] + [planted[-1][0]] and lat[-1] < n - 1:
+        if _fmt(pick(_read(text, s, a, stops=[lat[-1]])), fmt) == planted:
+            return "rule:long_vowel_before_cluster", g
+    # waqf_final_short_vowel: the last word of the ayah (read before a stop) ends in a short vowel in the planted
+    # reading; read in wasl into the next ayah of the mushaf, the spelling gives the planted tokens
+    after = (s, a + 1) if (s, a + 1) in q._raw else (s + 1, 1)
+    if lat[-1] == n - 1 and planted[-1] in ("a", "i", "u") and after in q._raw:
+        nxt = " ".join(q.ayah(*after).uthmani)
+        try:
+            gw = _fmt(pick(_read(text + " " + nxt, s, a, ref=False)), fmt)
+        except Exception:
+            gw = None
+        if gw == planted:
+            return "rule:waqf_final_short_vowel", g
+    # idgham_mithlayn: a sakin consonant before the same consonant merges with it into one held consonant (inside the
+    # word, or across the boundary, where the held consonant belongs to the second word)
+    merged = lambda x: x if fmt == "tj3" else degem(x) + SHADDA
+    for i in range(len(planted) - 1):
+        x, y = planted[i], planted[i + 1]
+        if x not in ("a", "i", "u", "aa", "ii", "uu", IKHFA) and degem(x) == degem(y) and \
+                g == planted[:i] + [merged(x)] + planted[i + 2:]:
+            return "rule:idgham_mithlayn", g
+    if planted[-1] not in ("a", "i", "u", "aa", "ii", "uu") and g == planted[:-1] and lat[-1] + 1 in full and \
+            full[lat[-1] + 1] and full[lat[-1] + 1][0] == degem(planted[-1]) + SHADDA:
+        return "rule:idgham_mithlayn", g
+    if lat[0] > 0 and G and G[0] == degem(planted[0]) + SHADDA and g[1:] == planted[1:]:
+        prev = _canon_form(ay.words[lat[0] - 1], lat[0] - 1, n)
+        if degem(prev[-1]) == degem(planted[0]) and full.get(lat[0] - 1) == prev[:-1]:
+            return "rule:idgham_mithlayn", g
+    if len(g) == len(planted):
+        diff = [i for i in range(len(g)) if g[i] != planted[i]]
+        plain = "".join(c for c in spelled if "ء" <= c <= "ي")
+        if len(diff) == 1:
+            i = diff[0]
+            # allah_madd: the madd of the name of Allah is read long whatever is written
+            if planted[i] == "a" and g[i] == "aa" and 0 < i < len(g) - 1 and degem(g[i - 1]) == "ل" \
+                    and g[i + 1] == "ه" and "لله" in plain:
+                return "rule:allah_madd", g
+            # ikhfa_before_non_ikhfa: the ikhfa nasal exists only before the 15 ikhfa letters
+            if planted[i] == IKHFA and (i + 1 >= len(planted) or degem(planted[i + 1]) not in IKHFA_LETTERS):
+                return "rule:ikhfa_before_non_ikhfa", g
+    return "differs", g
 
 
 def main():
@@ -229,29 +338,45 @@ def main():
             c = by[t]
             c["cases"] += 1
             c["exact"] += r["exact"]
-            c["tp"] += r["tp"]
-            c["fp"] += r["fp"]
-            c["fn"] += r["fn"]
+            c["exact_eq"] += r["exact"] or bool(r["equiv"])
+            if r["equiv"]:
+                c["equiv_" + r["equiv"]] += 1
+            for x in ("tp", "fp", "fn", "tp_eq", "fp_eq", "fn_eq"):
+                c[x] += r[x]
             if "readback" in r:
                 c["readback_cases"] += 1
                 c["readback_equal"] += r["readback"] == "equal"
                 c["readback_refused"] += r["readback"].startswith("engine_refused")
+                c["readback_noref"] += r["readback"] == "equal_without_reference"
+                if r["readback"].startswith("rule:"):
+                    c["readback_" + r["readback"]] += 1
     table = {}
     for t, c in by.items():
-        table[t] = {"cases": c["cases"], "exact_pct": round(100 * c["exact"] / c["cases"], 2),
-                    "precision": round(100 * c["tp"] / max(1, c["tp"] + c["fp"]), 2),
-                    "recall": round(100 * c["tp"] / max(1, c["tp"] + c["fn"]), 2)}
+        pct = lambda a, b: round(100 * a / max(1, b), 2)
+        table[t] = {"cases": c["cases"],
+                    "exact_pct": pct(c["exact"], c["cases"]), "exact": c["exact"],
+                    "exact_equiv_pct": pct(c["exact_eq"], c["cases"]), "exact_equiv": c["exact_eq"],
+                    "equiv_same_string": c["equiv_same_string"], "equiv_equal_cost": c["equiv_equal_cost"],
+                    "precision": pct(c["tp"], c["tp"] + c["fp"]), "recall": pct(c["tp"], c["tp"] + c["fn"]),
+                    "precision_equiv": pct(c["tp_eq"], c["tp_eq"] + c["fp_eq"]),
+                    "recall_equiv": pct(c["tp_eq"], c["tp_eq"] + c["fn_eq"])}
         if c["readback_cases"]:
-            table[t].update({"readback_cases": c["readback_cases"],
-                             "readback_equal_pct": round(100 * c["readback_equal"] / c["readback_cases"], 2),
+            rules = {k[len("readback_rule:"):]: v for k, v in c.items() if k.startswith("readback_rule:")}
+            n_ok = c["readback_equal"] + c["readback_noref"] + sum(rules.values())
+            table[t].update({"readback_cases": c["readback_cases"], "readback_equal": c["readback_equal"],
+                             "readback_equal_pct": pct(c["readback_equal"], c["readback_cases"]),
+                             "readback_equal_without_reference": c["readback_noref"],
+                             "readback_rules": rules,
+                             "readback_equal_or_rule": n_ok,
+                             "readback_equal_or_rule_pct": pct(n_ok, c["readback_cases"]),
                              "readback_engine_refused": c["readback_refused"]})
     summ = {"fmt": args.fmt, "planted_cases": len(done), "skipped_no_site": len(recs) - len(done),
             "seconds": round(time.time() - t0, 1), "by_type": table,
-            "misses": [r for r in done if not r["exact"]][:300],
-            "readback_differs": [r for r in done if r.get("readback", "equal") != "equal"][:300]}
+            "misses": [r for r in done if not r["exact"]],
+            "readback_not_equal": [r for r in done if r.get("readback", "equal") != "equal"]}
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     json.dump(summ, open(args.out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    print(json.dumps({k: v for k, v in summ.items() if k not in ("misses", "readback_differs")}, ensure_ascii=False,
+    print(json.dumps({k: v for k, v in summ.items() if k not in ("misses", "readback_not_equal")}, ensure_ascii=False,
                      indent=1))
 
 

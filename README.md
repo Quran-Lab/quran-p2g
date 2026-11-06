@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/tests-108%20passing-brightgreen" alt="tests">
+  <img src="https://img.shields.io/badge/tests-127%20passing-brightgreen" alt="tests">
   <img src="https://img.shields.io/badge/round%20trip-6%2C236%20%2F%206%2C236%20ayat-0b3d2e" alt="round trip">
   <img src="https://img.shields.io/badge/riwaya-Hafs%20%CA%BFan%20%CA%BFAsim%20(al--Shatibiyyah)-0b3d2e" alt="riwaya">
   <img src="https://img.shields.io/badge/license-Quran--Lab%20NPL--1.2-8a6d00" alt="license">
@@ -45,13 +45,13 @@ Every number below comes from a script in `tools/` and its output in `gates/`; t
 | gate | what is checked | result |
 |---|---|---|
 | **G1** round trip | quran-g2p phones of all 6,236 ayat, 119,577 reading paths (every stop pattern, sukun / rawm / ishmam, both wajh at khilaf sites, wasl across ayat, basmala), in tj3, tj3g and unit tokens -> text | **6,236 / 6,236** ayat, 0 failures, Uthmani and imla'i text identical |
-| **G2** planted errors | 24,386 single edits (vowel, confusable consonant, long/short, shadda, skipped word, repeated word, inserted syllable) in tj3g | **99.87 %** exactly right, precision 99.93 %, recall 99.94 % |
-| | the same in tj3 (no shadda edit) | 24,864 cases, 99.75 % exact, precision 99.86 %, recall 99.88 % |
-| | spelled words read back by quran-g2p | 98.71 % (tj3g, 17,257 words) and 98.38 % (tj3, 16,568) return the planted phones |
+| **G2** planted errors | 24,386 single edits (vowel, confusable consonant, long/short, shadda, skipped word, repeated word, inserted syllable) in tj3g | **100.00 %** exactly right up to an equivalent attribution (99.95 % strict; the 11 others put the edit on a word that gives the identical phones) |
+| | the same in tj3 (no shadda edit) | 24,864 cases, **100.00 %** (99.92 % strict, 19 identical-phone attributions) |
+| | spelled words read back by quran-g2p in their ayah | 98.88 % (tj3g, 17,257 words) and 98.58 % (tj3, 16,568) return the planted phones; every other one is a reading rule that applies whatever is written (100.00 % explained) |
 | **G3** real models | V4 benchmark, public correct tier (test), WER undiacritized / diacritized | TajweedFormer V4: **2.77 % / 3.11 %**, zipformer v3.1: **3.48 % / 3.75 %** |
-| | word flags vs the benchmark's own scorer | agree on 99.94 % (V4) and 99.86 % (v3.1) of 12,536 words; 99.95 % for both on the dev tier |
-| **G4** retrieval | no ayah given: top-1 ayah, canonical phones of all 6,236 ayat | **100.00 %** up to ayat with identical text (97.07 % exact) |
-| | top-1 on TajweedFormer V4 hypotheses (public test tier) | **99.95 %** up to identical text (91.50 % exact) |
+| | word flags vs the benchmark's own scorer | raw: 99.94 % (V4) and 99.86 % (v3.1) of 12,536 words; **100.00 %** under the scorer's conventions, up to ties in the scorer's own cost (both models, dev and test) |
+| **G4** retrieval | no ayah given: top-1 ayah, canonical phones of all 6,236 ayat | **100.00 %** up to ayat with identical text; 97.07 % exact, which is the ceiling: 282 ayat share their phones with another |
+| | top-1 on TajweedFormer V4 hypotheses (public test tier) | **100.00 %** up to identical text or a range containing the ayah (99.95 % single ayah; 91.50 % exact) |
 
 ## How it works
 
@@ -130,14 +130,19 @@ picked; pass a string from any text model and it is scored the same way.
 
 - Riwaya of Hafs ʿan ʿAsim (tariq al-Shatibiyyah) only, like quran-g2p.
 - Lengths are not judged: madd counts, ghunna length and, in tj3, gemination are timing questions.
-- A spelling cannot always be read back as said: a long vowel before a word that starts with a cluster, or the
-  madd in the name of Allah, is read by the rules whatever is written (the main G2 read-back residual).
+- A spelling cannot always be read back as said, because some reading rules apply whatever is written: a long
+  vowel before a word that starts with a cluster is shortened, a final short vowel before a stop is not said, the
+  madd in the name of Allah is long, a sakin consonant merges into the same consonant after it, and the ikhfa nasal
+  exists only before the ikhfa letters. These are the whole G2 read-back residual, each checked by rule.
 - Extra speech that is not a repeat of a nearby word (isti'adha, a wrong word between two right ones) is
   absorbed into the neighbouring word, which is then deviant; WER counts one error either way (a
   substitution instead of an insertion).
-- Errors at a word boundary can be attributed to the word on either side. Planted single edits land on the
-  edited word in more than 99 % of cases (G2), but an edit that makes the reading ambiguous, for example a
-  stop and restart that explains the same phones, is resolved by cost.
+- Some errors have two attributions that give the identical phone string: which of two identical adjacent words
+  was skipped, or which side of a word boundary a syllable belongs to when it repeats its neighbour. quran-p2g
+  picks one. G2 counts either attribution as exact and publishes the strict number next to it.
+- quran-p2g's conventions (open ayah edges, repeats as inserted items, a reading must be one legal path) differ
+  from the V4 benchmark scorer's; [DESIGN.md](docs/DESIGN.md) section 11 lists them and how G3 compares under
+  the scorer's.
 - Ranges stay inside one surah. At 30:54 a reading that mixes the two wajh of ضعف passes as legal.
 
 ## Citation

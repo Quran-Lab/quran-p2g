@@ -19,11 +19,15 @@
      "words": 6294,
      "agree": 6291,
      "agree_pct": 99.95,
+     "agree_convention": 6294,
+     "agree_convention_pct": 100.0,
+     "agree_convention_ties": 6294,
+     "agree_convention_ties_pct": 100.0,
      "ours_flagged": 119,
      "theirs_flagged": 122,
      "disagreement_classes": {
-      "ours_repeat_insertion_theirs_absorbed": 1,
-      "ours_match_wasl_into_next_ayah": 2
+      "raw:repeat_item": 1,
+      "raw:wasl_edge": 2
      }
     }
    },
@@ -36,8 +40,8 @@
     "ref_words": 12537,
     "word_counts": {
      "match": 12142,
-     "deviant": 388,
-     "deleted": 6,
+     "deviant": 387,
+     "deleted": 7,
      "inserted": 7
     },
     "agreement": {
@@ -45,13 +49,18 @@
      "words": 12536,
      "agree": 12529,
      "agree_pct": 99.94,
+     "agree_convention": 12533,
+     "agree_convention_pct": 99.98,
+     "agree_convention_ties": 12536,
+     "agree_convention_ties_pct": 100.0,
      "ours_flagged": 394,
      "theirs_flagged": 399,
      "disagreement_classes": {
-      "ours_repeat_insertion_theirs_absorbed": 4,
-      "ours_match_other": 1,
-      "ours_deviant_theirs_match": 1,
-      "ours_match_wasl_into_next_ayah": 1
+      "raw:repeat_item": 3,
+      "raw:tie_in_scorer_cost": 2,
+      "raw:path_legality": 1,
+      "raw:wasl_edge": 1,
+      "convention_only:tie_in_scorer_cost": 1
      }
     }
    }
@@ -75,11 +84,16 @@
      "words": 6294,
      "agree": 6291,
      "agree_pct": 99.95,
+     "agree_convention": 6293,
+     "agree_convention_pct": 99.98,
+     "agree_convention_ties": 6294,
+     "agree_convention_ties_pct": 100.0,
      "ours_flagged": 121,
      "theirs_flagged": 122,
      "disagreement_classes": {
-      "ours_match_wasl_into_next_ayah": 2,
-      "ours_deviant_theirs_match": 1
+      "convention_only:tie_in_scorer_cost": 1,
+      "raw:wasl_edge": 2,
+      "raw:path_legality": 1
      }
     }
    },
@@ -101,14 +115,17 @@
      "words": 12536,
      "agree": 12518,
      "agree_pct": 99.86,
+     "agree_convention": 12532,
+     "agree_convention_pct": 99.97,
+     "agree_convention_ties": 12536,
+     "agree_convention_ties_pct": 100.0,
      "ours_flagged": 474,
      "theirs_flagged": 478,
      "disagreement_classes": {
-      "ours_match_other": 4,
-      "ours_repeat_insertion_theirs_absorbed": 5,
-      "ours_deviant_theirs_match": 6,
-      "one_error_attributed_to_neighbouring_word": 2,
-      "ours_match_wasl_into_next_ayah": 1
+      "raw:tie_in_scorer_cost": 4,
+      "raw:repeat_item": 9,
+      "raw:path_legality": 4,
+      "raw:wasl_edge": 1
      }
     }
    }

@@ -82,9 +82,19 @@ form token. Costs, in one unit:
 | substitution: long vs short of one vowel, held vs plain, ں vs ن, same unit base | 2 |
 | substitution: consonant for consonant, vowel for vowel | 4 |
 | substitution: consonant for vowel | 6 |
-| a stop inside the span | 1 (a tie-break: the reading without the stop wins) |
-| a word not said at all | 3 x the length of its shortest form (below 4 per token, so a skipped word is reported as deleted instead of lending a stray vowel to a neighbour) |
-| a repeat: a run equal to a legal form of one of the previous 8 words or the next word | 2 x length + 2 (below 4 per token, so a repeated word is reported as an insertion instead of a deviant neighbour) |
+| a stop inside the span | 1; and among paths of equal cost, the one with fewer stops wins |
+| a word not said at all | 2 x the length of its shortest form + 1 |
+| a repeat: a run equal to a legal form of one of the previous 8 words or the next word | 2 x length + 1 |
+
+Why these three. A legal stop must stay almost free (a reader may stop wherever the rules allow), but a stop also
+switches the word before it to its waqf form, which can drop a connecting vowel or a final consonant. In 0.1.0 (skip
+3 x length, repeat 2 x length + 2) that let a stop plus a word fragment explain a skipped or repeated word as cheaply
+or more cheaply than the skip or the repeat itself: يُعَلِّمَانِ مِنْ أَحَدٍ with مِنْ skipped came out as "a stop
+after يُعَلِّمَانْ, then مِنْ said as its kasra", and لَكُم مَّا مَا (tj3) as "لَكُمَا, a stop, مَا". G2 found 63
+such cases (21 in tj3g, 42 in tj3). With a skip and a repeat at 2 x length + 1, the single event costs at most what
+the stop-and-fragment reading costs, and the second criterion (fewer stops) decides the tie. The criterion is lexicographic, not a cost: internally
+every cost is 4,096 x its value plus the number of stops, so it never outweighs one unit of cost, and a reading that
+stops where the rules allow is still matched exactly (G1).
 
 Options: `open_edges` (default on) lets the first word continue the previous ayah in wasl and the last word run
 into the next, because a clip cut at an ayah boundary often is. `basmala` (default on) lets the basmala be read
@@ -137,9 +147,20 @@ the definite article (ٱل before a held sun letter or a sakin lam, and the arti
 ibtida, which is dropped back to ٱ only when its vowel is the one the word takes), tanwin, teh marbuta and
 alef maqsura. The undiacritized form removes every mark, writes alef for alef wasla and alef madda for ءا.
 
-Spelling cannot express what the script cannot: a long vowel before a word that starts with a cluster is
-shortened by the reading rules whatever is written, and the madd in the name of Allah is read long whatever
-is written. These are the main residuals of the G2 read-back.
+Three hint rules were tightened in 0.1.1 after the G2 read-back showed spellings that did not read back:
+
+- a final nasal is taken as the tanwin only when the letter before it is the one the reference's tanwin sits on
+  (أَثِيمٍ said `ء a ث i م` was spelled أَثٍ, losing the meem), and never when the word was read before a stop,
+  where a tanwin is not said as a nasal (مَّكْنُونٌ said with a short u at the end of 37:49 was spelled مَكْنٌ);
+- a word that starts with the ikhfa nasal starts with a cluster too and gets hamzat al-wasl (ٱنفَضُّوا۟ said
+  with a changed consonant was spelled with a bare noon, which the previous word's tanwin then assimilated);
+- the article's lam said before a sun letter in ibtida (not assimilated) is written with a plain hamza, أَلْ:
+  quran-g2p reads ٱلْ before a sun letter as hamzat al-wasl with kasra, not as the article.
+
+Some phone strings cannot be written so that a reader of the script says them, because a reading rule applies
+whatever is written. The G2 read-back lists them by rule (section 12): a long vowel before a word that starts with a
+cluster, a short vowel at the end of a word read before a stop, the madd in the name of Allah, two identical
+consonants with the first sakin (idgham mithlayn), and the ikhfa nasal before a letter that takes no ikhfa.
 
 ## 8. Retrieval (no ayah given)
 
@@ -170,3 +191,52 @@ The board's own references are in a diacritized simple script, which this packag
 - A learned P2G. A learned broad-Arabic phoneme-to-grapheme model exists elsewhere in Quran Lab's work;
   this package does not use or need one: inside the mushaf every word is known, and outside it a rule-based
   spelling is deterministic and auditable.
+
+## 11. Conventions, and how the V4 benchmark scorer differs
+
+Some differences between quran-p2g's word statuses and another tool's are not errors on either side but different
+answers to a question of convention. quran-p2g's answers, and the V4 benchmark scorer's (`tj3_word_flags` in
+`score_v4_bench.py`):
+
+| question | quran-p2g (the convention of this package) | V4 benchmark scorer |
+|---|---|---|
+| ayah edges | open: the first word may continue the previous ayah and the last may run into the next, in wasl (a clip cut at an ayah boundary often does) | ibtida at the start, waqf at the end |
+| repeated material | an inserted repeat item; the words around it stay a match, so WER counts one insertion | absorbed into a neighbouring word, which is flagged |
+| legality | the reading must be one legal path: boundary states agree from word to word | each word against all its forms, whatever the state of its neighbours |
+| basmala before ayah 1 | an optional item, left out of the text | not in the lattice |
+
+The legality row is the one where quran-p2g is stricter for a reason: فَإِذَا said with its waqf long vowel and then
+ٱنشَقَّتِ in wasl is no legal reading (the long vowel is shortened before the cluster), and quran-p2g flags it. The
+scorer passes both words, because each is a legal form on its own.
+
+G3 measures agreement three ways: raw (quran-p2g's defaults), under the scorer's conventions (quran-p2g run with
+`open_edges=False`, `basmala=False`, `repeats=False`, a word passing when its phones are any of its legal forms in any
+boundary state; `bench_convention` in `tools/gate_g3.py`), and up to ties: a word that still disagrees under the
+scorer's conventions is an attribution tie when quran-p2g's segmentation costs exactly the scorer's own optimum under
+the scorer's own cost (unit edit distance over its lattice). Every raw disagreement is put in the first convention
+that removes it, or in the tie class.
+
+## 12. What G2 counts as exact
+
+A planted edit sometimes has more than one attribution that no phone string can tell apart. Skipping either of the
+two words of هَيْهَاتَ هَيْهَاتَ gives the same phones; a consonant and vowel inserted right after the same consonant
+and vowel at the start of a word (تَرَ said تَتَرَ after أَلَمْ) is the same string as the syllable added to the end of
+the word before. G2 reports two numbers. Strict: quran-p2g reports exactly the planted statuses. Equivalent: it
+reports the planted statuses of another attribution, and the same edit type on that other word produces the identical
+phone string (`tools/g2_equiv.py` enumerates every such word: every other word skipped or repeated, the inserted pair
+at every position of every other word). Nothing else is accepted, and both numbers are published.
+
+The read-back check gives the spelled word back to quran-g2p inside its ayah, with the same neighbours and the same
+stops as the planted reading. Where the tokens differ, the difference is accepted only when a named reading rule
+forces it whatever is written, checked mechanically:
+
+| rule | the planted tokens | check |
+|---|---|---|
+| `long_vowel_before_cluster` | a word-final long vowel before a word that starts with a cluster, in wasl | read back short; read again with a stop after the word, long |
+| `waqf_final_short_vowel` | a short vowel at the end of the last word of the ayah, read before a stop | read back without it; read again in wasl into the next ayah, with it |
+| `allah_madd` | the name of Allah with a short a | read back long, the only difference |
+| `idgham_mithlayn` | a sakin consonant before the same consonant | read back as one held consonant (inside the word, or across the boundary) |
+| `ikhfa_before_non_ikhfa` | the ikhfa nasal before a letter that takes no ikhfa | the only difference is that nasal |
+
+quran-g2p refuses a non-mushaf spelling at a word its ayah reference pins (the letter name قٓ of 50:1, the tasheel
+of ءَا۬عْجَمِىٌّ in 41:44); such a word is read again without the reference and counted separately.

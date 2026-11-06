@@ -9,7 +9,12 @@
 Correct (strict): the top candidate is exactly the ayah. Correct up to identical text: the top candidate is the ayah or
 an ayah with the same folded canonical phones (the Quran repeats some ayat word for word, e.g. 55:13 and 55:16;
 no phone string can tell them apart). A top candidate that is a range is counted correct only in the
-"contains" column.
+"contains" column. The last column counts a query correct when the top candidate is the ayah, an ayah with the same
+folded phones, or a range that contains the ayah (a clip that runs into the next ayah is identified as the range it
+covers).
+
+The exact-ayah ceiling on the canonical set: a phone string shared by k ayat is one query answer for all k of them,
+so at most one of the k can be answered exactly; with groups of sizes k the ceiling is 6,236 - sum(k - 1).
 """
 from __future__ import annotations
 
@@ -40,7 +45,8 @@ def q_hyp(item):
 
 def _judge(ayah, cands):
     if not cands:
-        return {"ayah": ayah, "top": None, "strict": False, "same_text": False, "contains": False}
+        return {"ayah": ayah, "top": None, "strict": False, "same_text": False, "contains": False,
+                "same_or_range": False}
     top = cands[0]
     s, a = map(int, ayah.split(":"))
     strict = top.ref == ayah
@@ -48,7 +54,7 @@ def _judge(ayah, cands):
         (top.first == top.last and _same_text(top, s, a))
     contains = top.surah == s and top.first <= a <= top.last
     return {"ayah": ayah, "top": top.ref, "score": round(top.score, 4), "margin": round(top.margin, 4),
-            "strict": strict, "same_text": same, "contains": contains}
+            "strict": strict, "same_text": same, "contains": contains, "same_or_range": same or contains}
 
 
 def _same_text(top, s, a):
@@ -62,6 +68,8 @@ def summarize(rs):
     return {"queries": n, "top1_strict_pct": round(100 * sum(r["strict"] for r in rs) / n, 2),
             "top1_same_text_pct": round(100 * sum(r["same_text"] for r in rs) / n, 2),
             "top1_contains_pct": round(100 * sum(r["contains"] for r in rs) / n, 2),
+            "top1_same_text_or_range_pct": round(100 * sum(r["same_or_range"] for r in rs) / n, 2),
+            "top1_strict": sum(r["strict"] for r in rs),
             "misses": [r for r in rs if not r["same_text"]][:60]}
 
 
@@ -98,6 +106,10 @@ def main():
     sizes = collections.Counter(len(v) for v in __import__("quran_p2g.retrieve", fromlist=["index"]).index()
                                 .text_of.values())
     out["identical_text_groups"] = {str(k): v for k, v in sorted(sizes.items())}
+    n = sum(k * v for k, v in sizes.items())
+    ceiling = n - sum((k - 1) * v for k, v in sizes.items())
+    out["canonical_strict_ceiling"] = {"ayat": n, "answerable_exactly": ceiling,
+                                       "pct": round(100 * ceiling / n, 2)}
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     json.dump(out, open(args.out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 

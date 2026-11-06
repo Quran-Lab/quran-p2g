@@ -145,10 +145,14 @@ def _ref_info(ref):
     for q, mark in TANWIN.items():
         if mark in tail[-4:]:
             info["tanwin"] = q
-            after = tail[tail.rfind(mark) + 1:]
+            at = tail.rfind(mark)
+            after = tail[at + 1:]
             seat = [c for c in after if c not in MARKS]
             if seat:
                 info["tanwin_seat"] = seat[0]
+            carrier = [c for c in tail[:at] if c not in MARKS]
+            if carrier:
+                info["tanwin_on"] = carrier[-1]
     if base and base[-1] == TEH_MARBUTA:
         info["marbuta"] = True
     if base and base[-1] == ALEF_MAQSURA:
@@ -165,24 +169,36 @@ def _sun_start(core, k, sun, geminates_known):
     return k + 1 < len(core) and (core[k + 1] in SHORT or core[k + 1] in LONG)
 
 
+_CARRIES = {TEH_MARBUTA: ("ت", "ه"), "أ": (HAMZA,), "إ": (HAMZA,), "ؤ": (HAMZA,), "ئ": (HAMZA,)}
+
+
+def _tanwin_letter(info, letter):
+    """The phones' letter is the one the reference's tanwin sits on (so a final nasal can be its tanwin)."""
+    on = info.get("tanwin_on")
+    return on is None or letter == on or letter in _CARRIES.get(on, ())
+
+
 def _qamari_start(core, k):
     return k + 1 < len(core) and core[k] == LAM and core[k + 1] not in SHORT and core[k + 1] not in LONG
 
 
-def spell_core(core, ref_word: str | None = None, geminates_known: bool = False) -> Spelling:
+def spell_core(core, ref_word: str | None = None, geminates_known: bool = False, waqf: bool = False) -> Spelling:
     """Core (tj3g-alphabet) tokens of one word -> Spelling. geminates_known: the tokens mark held consonants (tj3g,
-    units), so an article's sun letter must be held to be read as the article."""
+    units), so an article's sun letter must be held to be read as the article. waqf: the word was read before a stop,
+    where a tanwin is never said as a nasal (a final nasal is then the word's own letter)."""
     core = [t for t in core if t != "<foreign>"]
     info = _ref_info(ref_word)
     sun = info.get("sun")
     prefix = ""
     starts_wasl = len(core) >= 3 and core[0] == HAMZA and core[1] in SHORT
     article_a = starts_wasl and core[1] == "a"                        # the article's hamza is always read with fatha
-    if info.get("article") and article_a and _qamari_start(core, 2):
+    if info.get("article") and article_a and _qamari_start(core, 2) and core[3][0] not in SUN:
         core, prefix = core[3:], ALEF_WASLA + LAM + SUKUN             # ibtida: al- + a qamari letter
     elif info.get("article") and article_a and _sun_start(core, 2, sun, geminates_known):
         core, prefix = core[2:], ALEF_WASLA + LAM                     # ibtida: a- + the held sun letter
-    elif info.get("wasl") and starts_wasl and core[2] not in SHORT and core[2] not in LONG             and len(core) > 3 and core[3] not in SHORT and core[3] not in LONG             and core[1] == ("u" if len(core) > 4 and core[4] in ("u", "uu") else "i"):
+    elif info.get("wasl") and starts_wasl and core[2] not in SHORT and core[2] not in LONG \
+            and len(core) > 3 and core[3] not in SHORT and core[3] not in LONG \
+            and core[1] == ("u" if len(core) > 4 and core[4] in ("u", "uu") else "i"):
         core, prefix = core[2:], ALEF_WASLA                           # ibtida of a hamzat-al-wasl word
     elif info.get("article") and _qamari_start(core, 0):
         core, prefix = core[1:], ALEF_WASLA + LAM + SUKUN             # wasl: l- + a qamari letter
@@ -197,15 +213,16 @@ def spell_core(core, ref_word: str | None = None, geminates_known: bool = False)
     tanwin = None
     if info.get("tanwin") and len(syls) >= 2:
         last, before = syls[-1], syls[-2]
-        if last.vowel is None and last.letter in ("ن", "م") and not last.gem \
-                and before.vowel == info["tanwin"]:
+        if not waqf and last.vowel is None and last.letter in ("ن", "م") and not last.gem \
+                and before.vowel == info["tanwin"] and _tanwin_letter(info, before.letter):
             syls = syls[:-1]
             tanwin = info["tanwin"]
-        elif info["tanwin"] == "a" and last.vowel == "aa" and info.get("tanwin_seat") in (ALEF, ALEF_MAQSURA):
+        elif info["tanwin"] == "a" and last.vowel == "aa" and info.get("tanwin_seat") in (ALEF, ALEF_MAQSURA) \
+                and _tanwin_letter(info, last.letter):
             last.vowel = "a"
             tanwin = "a"
-    if not prefix and syls[0].letter and syls[0].vowel is None and not syls[0].nasal:
-        prefix = ALEF_WASLA                          # a word that starts with a cluster: hamzat al-wasl
+    if not prefix and syls[0].letter and syls[0].vowel is None:
+        prefix = ALEF_WASLA                          # a word that starts with a cluster (or ں): hamzat al-wasl
     out = []
     for k, sy in enumerate(syls):
         final = k == len(syls) - 1
