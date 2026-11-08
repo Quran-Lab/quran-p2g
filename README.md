@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/tests-127%20passing-brightgreen" alt="tests">
+  <img src="https://img.shields.io/badge/tests-130%20passing-brightgreen" alt="tests">
   <img src="https://img.shields.io/badge/round%20trip-6%2C236%20%2F%206%2C236%20ayat-0b3d2e" alt="round trip">
   <img src="https://img.shields.io/badge/riwaya-Hafs%20%CA%BFan%20%CA%BFAsim%20(al--Shatibiyyah)-0b3d2e" alt="riwaya">
   <img src="https://img.shields.io/badge/license-Quran--Lab%20NPL--1.2-8a6d00" alt="license">
@@ -37,6 +37,33 @@ The damma of الحمد was read as a kasra: a phonetic deviation, written into 
 without harakat (so it costs nothing in undiacritized WER, exactly as it would for a text model). The ʿayn of
 العالمين was read as a hamza: a letter changed, so the word is spelled as it was said and counts in both.
 
+## It does not snap to the expected words
+
+quran-p2g knows which ayah is being recited, so the obvious worry is that it quietly writes the expected word and
+hides the model's mistakes. It does not, and gate G5 measures it on all 6,236 ayat, with no ayah given:
+
+- A word is written in mushaf spelling **only when its phones are exactly one of that word's legal readings**. Any
+  other word is spelled from its sounds; the expected word is used only for spelling conventions (the article,
+  hamzat al-wasl, tanween), never to choose letters.
+- **One sound changed** in 18,708 readings (a consonant swapped, dropped or added): every change the Arabic spelling
+  can show is counted. The 333 that are not are changes no text can show either: a doubled consonant (shadda, 265),
+  a tanween's noon (47), a written noon said openly (14), ha / ta of a ta marbuta (4), hamza seats and alef maqsura
+  that the board's normalisation folds (3). Zero are snaps.
+- **Same mistake, same price.** The same word-level mistake, put once into the text a text model would write and once
+  into the phones a phoneme model would write, costs the same WER:
+
+| one word per ayah | text model | phones through quran-p2g |
+|---|---|---|
+| replaced by a word of another ayah | 7.81 % | 7.97 % |
+| a word of another ayah inserted | 7.83 % | 8.01 % |
+| a word dropped | 7.82 % | 7.90 % |
+| a word repeated | 7.83 % | 7.83 % |
+
+The remaining 0.1 to 0.2 points go against the phoneme model, never for it. What undiacritized WER cannot see is
+the same for both kinds of model: short vowels and shadda (they are in the diacritized text and its WER), tanween,
+and the long vowels the mushaf does not write as letters (the small alef of ذلك and هذا, the madd of الله, the
+silah of بِهِۦ).
+
 ## Results
 
 Every number below comes from a script in `tools/` and its output in `gates/`; the full tables are in
@@ -45,13 +72,15 @@ Every number below comes from a script in `tools/` and its output in `gates/`; t
 | gate | what is checked | result |
 |---|---|---|
 | **G1** round trip | quran-g2p phones of all 6,236 ayat, 119,577 reading paths (every stop pattern, sukun / rawm / ishmam, both wajh at khilaf sites, wasl across ayat, basmala), in tj3, tj3g and unit tokens -> text | **6,236 / 6,236** ayat, 0 failures, Uthmani and imla'i text identical |
-| **G2** planted errors | 24,386 single edits (vowel, confusable consonant, long/short, shadda, skipped word, repeated word, inserted syllable) in tj3g | **100.00 %** exactly right up to an equivalent attribution (99.95 % strict; the 11 others put the edit on a word that gives the identical phones) |
-| | the same in tj3 (no shadda edit) | 24,864 cases, **100.00 %** (99.92 % strict, 19 identical-phone attributions) |
-| | spelled words read back by quran-g2p in their ayah | 98.88 % (tj3g, 17,257 words) and 98.58 % (tj3, 16,568) return the planted phones; every other one is a reading rule that applies whatever is written (100.00 % explained) |
-| **G3** real models | V4 benchmark, public correct tier (test), WER undiacritized / diacritized | TajweedFormer V4: **2.77 % / 3.11 %**, zipformer v3.1: **3.48 % / 3.75 %** |
-| | word flags vs the benchmark's own scorer | raw: 99.94 % (V4) and 99.86 % (v3.1) of 12,536 words; **100.00 %** under the scorer's conventions, up to ties in the scorer's own cost (both models, dev and test) |
+| **G2** planted errors | 24,386 single edits (vowel, confusable consonant, long/short, shadda, skipped word, repeated word, inserted syllable) in tj3g | **100.00 %** exactly right up to an equivalent attribution (99.79 % strict; the others put the edit on a word that gives the identical phones) |
+| | the same in tj3 (no shadda edit) | 24,864 cases, **100.00 %** (99.78 % strict, the others identical-phone attributions) |
+| | spelled words read back by quran-g2p in their ayah | 98.81 % (tj3g, 17,229 words) and 98.55 % (tj3, 16,536) return the planted phones; 99.94 % and 99.98 % with the named reading rules that apply whatever is written (6 words the engine refuses to read) |
+| **G3** real models | V4 benchmark, public correct tier (test), WER undiacritized / diacritized | TajweedFormer V4: **2.23 % / 2.60 %**, zipformer v3.1: **3.03 % / 3.31 %** |
+| | word flags vs the benchmark's own scorer | raw: 99.90 % (V4) and 99.84 % (v3.1) of 12,172 words; **100.00 %** under the scorer's conventions, up to ties in the scorer's own cost (both models, dev and test) |
+| **G5** no snapping | one sound changed in every ayah (18,708 cases), no ayah given | **0** snaps: every uncounted change is one the spelling cannot show (see above) |
+| | one word changed, text vs phones through quran-p2g | same WER within 0.2 points, never in the phoneme model's favour |
 | **G4** retrieval | no ayah given: top-1 ayah, canonical phones of all 6,236 ayat | **100.00 %** up to ayat with identical text; 97.07 % exact, which is the ceiling: 282 ayat share their phones with another |
-| | top-1 on TajweedFormer V4 hypotheses (public test tier) | **100.00 %** up to identical text or a range containing the ayah (99.95 % single ayah; 91.50 % exact) |
+| | top-1 on TajweedFormer V4 hypotheses (public test tier, 1,780 clips) | **100.00 %** up to ayat with identical text (91.52 % exact) |
 
 ## How it works
 
@@ -133,10 +162,12 @@ picked; pass a string from any text model and it is scored the same way.
 - A spelling cannot always be read back as said, because some reading rules apply whatever is written: a long
   vowel before a word that starts with a cluster is shortened, a final short vowel before a stop is not said, the
   madd in the name of Allah is long, a sakin consonant merges into the same consonant after it, and the ikhfa nasal
-  exists only before the ikhfa letters. These are the whole G2 read-back residual, each checked by rule.
+  exists only before the ikhfa letters. These are nearly all of the G2 read-back residual, each checked by rule
+  (6 spelled words quran-g2p refuses to read).
 - Extra speech that is not a repeat of a nearby word (isti'adha, a wrong word between two right ones) is
   absorbed into the neighbouring word, which is then deviant; WER counts one error either way (a
-  substitution instead of an insertion).
+  substitution instead of an insertion). G5 measures what is left: one inserted word costs 8.01 % WER through the
+  phones against 7.83 % as text.
 - Some errors have two attributions that give the identical phone string: which of two identical adjacent words
   was skipped, or which side of a word boundary a syllable belongs to when it repeats its neighbour. quran-p2g
   picks one. G2 counts either attribution as exact and publishes the strict number next to it.

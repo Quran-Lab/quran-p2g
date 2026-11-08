@@ -9,26 +9,15 @@
   "misses": []
  },
  "agg18k_t1p_panel_correct_test": {
-  "queries": 1846,
-  "top1_strict_pct": 91.5,
-  "top1_same_text_pct": 99.95,
-  "top1_contains_pct": 91.55,
+  "queries": 1780,
+  "top1_strict_pct": 91.52,
+  "top1_same_text_pct": 100.0,
+  "top1_contains_pct": 91.52,
   "top1_same_text_or_range_pct": 100.0,
-  "top1_strict": 1689,
-  "misses": [
-   {
-    "ayah": "86:11",
-    "top": "86:11-12",
-    "score": 0.7188,
-    "margin": 0.1535,
-    "strict": false,
-    "same_text": false,
-    "contains": true,
-    "same_or_range": true
-   }
-  ]
+  "top1_strict": 1629,
+  "misses": []
  },
- "seconds": 28.8,
+ "seconds": 19.0,
  "identical_text_groups": {
   "1": 5954,
   "2": 81,

@@ -153,7 +153,10 @@ def test_deviation_levels_directly():
     assert deviation_level(["ك" + SH, "a"], ["ك", "a"])[0] == "harakat"
     assert deviation_level(["ك", "aa"], ["ك", "a"])[0] == "letters"
     assert deviation_level(["ں", "ف"], ["ن", "ف"])[0] == "tajweed"
-    assert deviation_level(["م", "ب"], ["ن", "ب"])[0] == "tajweed"
+    # iqlab: a written noon read as meem before ba is tajweed; a written meem read as noon is another word (0.1.2)
+    assert deviation_level(["م", "ب"], ["ن", "ب"], written="أَنۢبِئْهُم")[0] == "tajweed"
+    assert deviation_level(["ن", "ب"], ["م", "ب"])[0] == "tajweed"
+    assert deviation_level(["ل", "a", "ك", "u", "م"], ["ل", "a", "ك", "u", "ن"], ["ب"], "لَكُم")[0] == "letters"
     assert deviation_level(["ع", "a"], ["ء", "a"])[0] == "letters"
     assert deviation_level(["ع", "a"], ["ع", "a", "ن"])[0] == "tajweed"
 

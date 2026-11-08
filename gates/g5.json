@@ -1,0 +1,48 @@
+{
+ "ayat": 6236,
+ "seconds": 159.6,
+ "A_one_sound": {
+  "letter_swap": {
+   "cases": 6236,
+   "counted": 6230,
+   "not_counted:ta_marbuta": 4,
+   "not_counted:tanween": 2
+  },
+  "letter_drop": {
+   "cases": 6236,
+   "counted": 6191,
+   "not_counted:tanween": 45
+  },
+  "letter_add": {
+   "cases": 6236,
+   "counted": 5954,
+   "not_counted:shadda": 265,
+   "not_counted:written_noon": 14,
+   "not_counted:seat_fold": 3
+  }
+ },
+ "A_other_cases": [],
+ "B_one_word": {
+  "word_swap": {
+   "cases": 6032,
+   "text_wer": 7.81,
+   "phones_wer": 7.97
+  },
+  "word_insert": {
+   "cases": 6032,
+   "text_wer": 7.83,
+   "phones_wer": 8.01
+  },
+  "word_drop": {
+   "cases": 6032,
+   "text_wer": 7.82,
+   "phones_wer": 7.9
+  },
+  "word_repeat": {
+   "cases": 6032,
+   "text_wer": 7.83,
+   "phones_wer": 7.83
+  }
+ },
+ "pass": true
+}

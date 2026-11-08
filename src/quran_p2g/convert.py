@@ -183,9 +183,91 @@ def _unvowelled(seq, k):
     return k + 1 >= len(seq) or (seq[k + 1] not in SHORT and seq[k + 1] not in LONG)
 
 
-def deviation_level(expected_core, said_core, next_core=None):
+_IDGHAM = set("يرملون")
+_IKHFA_LETTERS = set("تثجدذزسشصضطظفقك")
+_TASHKEEL = "ًٌٍَُِّْٰٕٓٔۖۗۘۙۚ" \
+            "ۛۜ۝۞ۣ۟۠ۡۢۤۥۦۧۨ۩۪ۭ۫۬"
+
+
+def _next_sound(seq, k, next_core):
+    nxt = seq[k + 1] if k + 1 < len(seq) else (next_core[0] if next_core else None)
+    return _base(nxt) if nxt is not None else None
+
+
+def _written_iqlab_site(written):
+    """the written word holds a noon or tanween that iqlab can turn into a meem sound: a noon followed by ba inside the
+    word, or a final noon / tanween (iqlab across the boundary). 0.1.2: a meem that is WRITTEN as meem (lakum) read as
+    noon is a letter mistake (lakun), not iqlab."""
+    if written is None:
+        return False
+    core = "".join(c for c in written if c not in _TASHKEEL or c in "ًٌٍ")
+    return "نب" in core or core.endswith(("ن", "ً", "ٌ", "ٍ", "ًا", "ًى"))
+
+
+def _tanween_end(written):
+    """the word ends in tanween (its noon sound is not a written letter); unknown spelling counts as tanween, as before"""
+    if written is None:
+        return True
+    core = "".join(c for c in written if c not in _TASHKEEL or c in "ًٌٍ")
+    return core.endswith(("ً", "ٌ", "ٍ", "ًا", "ًى"))
+
+
+_VOWEL_MARKS = set("ًٌٍَُِّ")     # fatha damma kasra shadda tanween
+
+
+def _sakin_noon_before(written, letter):
+    """the written word has a noon with no vowel or shadda on it, followed by `letter` (None: the noon ends the word)"""
+    for i, c in enumerate(written):
+        if c != "ن":
+            continue
+        j, marks = i + 1, set()
+        while j < len(written) and written[j] in _TASHKEEL:
+            marks.add(written[j])
+            j += 1
+        if marks & _VOWEL_MARKS:
+            continue
+        nxt = written[j] if j < len(written) else None
+        if nxt == letter:
+            return True
+    return False
+
+
+def _ikhfa_context(e, s, seq, i, next_core, written):
+    """ikhfa nasal against a full noon / meem: tajweed only where ikhfa can happen (0.1.2). Before, any noon / meem /
+    ikhfa swap passed, which hid a dropped letter ('bisalaa-in' for 'bisalaamin' aligned as meem -> ikhfa nasal)."""
+    other = s if e == IKHFA else e
+    if other == IKHFA:
+        return True
+    nxt = _next_sound(seq, i, next_core)
+    if nxt is None:
+        return written is None and next_core is None and i + 1 >= len(seq)   # unknown context (direct calls)
+    if _base(other) == "م":
+        return nxt == "ب"                       # ikhfa shafawi: meem sakin before ba
+    return nxt in _IKHFA_LETTERS                # ikhfa haqiqi: noon sakin / tanween before an ikhfa letter
+
+
+def _noon_may_assimilate(seq, pos, next_core, written, waqf):
+    """a noon sound said or not said at seq[pos] is a tajweed difference only where a noon sakin or tanween is WRITTEN
+    there and idgham or ikhfa can apply (0.1.2). Before, any unvowelled noon dropped or added before such a letter
+    passed, which hid real mistakes ('al-muttaqi' for 'al-muttaqin' before a stop, 'dayinf' for 'dayf')."""
+    end = pos + 1 >= len(seq)
+    if end and next_core is None:
+        return _tanween_end(written)          # at the end of the clip: only a tanween's noon (not a written letter)
+    nxt = _next_sound(seq, pos, next_core)
+    if nxt not in _IDGHAM | _IKHFA_LETTERS:
+        return False
+    if written is None:
+        return True                           # spelling unknown (direct calls): as before
+    if end:                                   # across the boundary: idgham or ikhfa, only in wasl
+        return not waqf and (_tanween_end(written) or _sakin_noon_before(written, None))
+    # inside a word only ikhfa applies (noon before ya / waw inside a word is izhar: ad-dunya, qinwan, bunyan)
+    return nxt in _IKHFA_LETTERS and _sakin_noon_before(written, nxt)
+
+
+def deviation_level(expected_core, said_core, next_core=None, written=None, waqf=False):
     """-> (level, edits): the most visible class of the differences, and the edits as [op, expected, said].
-    next_core: the first core token of the following word (iqlab can cross the word boundary)."""
+    next_core: the first core token of the following word (iqlab, idgham and ikhfa can cross the word boundary).
+    written: the word's Uthmani text (tells a written noon from a written meem)."""
     ops = _wlev_ops(expected_core, said_core)
     lv, edits = -1, []
     for op, i, j in ops:
@@ -199,19 +281,22 @@ def deviation_level(expected_core, said_core, next_core=None):
                 k = 1
             elif _base(e) == _base(s) and e not in SHORT + LONG:
                 k = 1                                            # held vs plain: shadda
-            elif e[0] in _NASALS and s[0] in _NASALS and IKHFA in (e, s):
-                k = 0
+            elif e[0] in _NASALS and s[0] in _NASALS and IKHFA in (e, s) and _ikhfa_context(
+                    e, s, expected_core, i, next_core, written):
+                k = 0          # ikhfa against izhar (0.1.2: only where ikhfa can happen)
             elif {_base(e), _base(s)} == {"ن", "م"} and _unvowelled(expected_core, i) \
-                    and _unvowelled(said_core, j) and _before_ba(expected_core, i, next_core):
-                k = 0                                            # iqlab against izhar (only before ba: 0.1.2)
+                    and _unvowelled(said_core, j) and _before_ba(expected_core, i, next_core) \
+                    and (_base(e) == "ن" or _written_iqlab_site(written)):
+                k = 0                                            # iqlab against izhar (0.1.2: before ba, written noon)
             else:
                 k = 2
         else:
             t, seq, pos = (e, expected_core, i) if op == "del" else (s, said_core, j)
             if t in SHORT:
                 k = 1
-            elif t[0] in ("ن", IKHFA) and _unvowelled(seq, pos):
-                k = 0                                            # tanwin / sakin noon assimilated or not
+            elif t[0] in ("ن", IKHFA) and _unvowelled(seq, pos) and _noon_may_assimilate(
+                    seq, pos, next_core, written, waqf):
+                k = 0          # tanwin / sakin noon assimilated or not (0.1.2: only where idgham or ikhfa can happen)
             elif t not in LONG and ((pos > 0 and _base(seq[pos - 1]) == _base(t)) or
                                     (pos + 1 < len(seq) and _base(seq[pos + 1]) == _base(t))):
                 k = 1                                            # a doubled consonant: shadda
@@ -465,7 +550,7 @@ def _build(hyp, fmt, words, preps, al, ayat, n_pre, ref, retrieval):
                 if w in by_word:
                     nt = preps[w][0][by_word[w].form]
                     nx = to_core(list(nt[:1]), fmt) if nt else None
-                r.level, r.edits = deviation_level(core_e, core_s, nx)
+                r.level, r.edits = deviation_level(core_e, core_s, nx, ay.uthmani[ti], form["right"] == "waqf")
                 r.spelling = spell_core(core_s, ay.uthmani[ti], geminates_known=fmt in ("tj3g", "units"),
                                         waqf=form["right"] == "waqf")
             r.text = "" if status == "deleted" else (

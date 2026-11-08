@@ -250,10 +250,16 @@ deleted and its phones absorbed by word B", and the tie-break sometimes took the
 (for example "qadlmi'ad" for "yukhlifu l-mi'ad" with yukhlifu read as "qad"). After the alignment, a re-split now tries
 every boundary between two neighbouring words, keeps the boundary states legal (a word in waqf is followed by a word in
 ibtida, the outer boundaries unchanged), and takes the split with the fewest words wrong at the letter level. It changes
-the alignment only when that number strictly drops, so it cannot hide a mistake. The same test after the fix: 14.75 %
+the alignment only when that number strictly drops, so it cannot hide a mistake. The same test after the fix: 14.80 %
 against 14.57 %; inserted, deleted and repeated words within 0.25 points of the text path; one letter swapped in
-15.5 % of words reads 15.42 %.
+15.5 % of words reads 15.50 %. Gate G5 (tools/gate_g5.py) now runs this on all 6,236 ayat.
 
-The unvowelled noon / meem swap is tajweed only in the iqlab context (the next sound, in the word or at the start of
-the next word, is ba). Anywhere else it is a different word ("ka'annahun" for "ka'annahum") and counts as a letter
-mistake.
+Three tajweed-level rules were too broad and hid real letter mistakes; each now holds only where the rule applies:
+- a noon sakin or tanween dropped or added (idgham, ikhfa): only where a noon sakin or tanween is written there,
+  inside a word only before an ikhfa letter (noon before ya or waw inside a word is izhar: ad-dunya), across a word
+  only in wasl ("al-muttaqi" for "al-muttaqin" before a stop was hidden);
+- the ikhfa nasal against a full noon or meem: only before an ikhfa letter (noon) or before ba (meem, ikhfa
+  shafawi) ("bisalaa-in" for "bisalaamin" was hidden);
+- noon against meem (iqlab): only before ba, and a meem read as noon only where the written letter is a noon
+  ("lakun" for "lakum" was hidden).
+

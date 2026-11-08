@@ -2,130 +2,128 @@
  "models": {
   "agg18k": {
    "t1p_panel_correct_dev": {
-    "rows": 969,
-    "converted": 969,
+    "rows": 930,
+    "converted": 930,
     "errors": 0,
-    "wer_undiacritized_imlaei": 1.72,
-    "wer_diacritized_uthmani": 1.86,
-    "ref_words": 6294,
+    "wer_undiacritized_imlaei": 0.95,
+    "wer_diacritized_uthmani": 1.14,
+    "ref_words": 6074,
     "word_counts": {
-     "match": 6175,
-     "deviant": 119,
+     "match": 6005,
+     "deviant": 69,
      "deleted": 0,
      "inserted": 1
     },
     "agreement": {
-     "rows_compared": 969,
-     "words": 6294,
-     "agree": 6291,
-     "agree_pct": 99.95,
-     "agree_convention": 6294,
+     "rows_compared": 930,
+     "words": 6074,
+     "agree": 6066,
+     "agree_pct": 99.87,
+     "agree_convention": 6074,
      "agree_convention_pct": 100.0,
-     "agree_convention_ties": 6294,
+     "agree_convention_ties": 6074,
      "agree_convention_ties_pct": 100.0,
-     "ours_flagged": 119,
-     "theirs_flagged": 122,
+     "ours_flagged": 69,
+     "theirs_flagged": 71,
      "disagreement_classes": {
-      "raw:repeat_item": 1,
-      "raw:wasl_edge": 2
+      "raw:wasl_edge": 7,
+      "raw:repeat_item": 1
      }
     }
    },
    "t1p_panel_correct_test": {
-    "rows": 1846,
-    "converted": 1846,
+    "rows": 1780,
+    "converted": 1780,
     "errors": 0,
-    "wer_undiacritized_imlaei": 2.77,
-    "wer_diacritized_uthmani": 3.11,
-    "ref_words": 12537,
+    "wer_undiacritized_imlaei": 2.23,
+    "wer_diacritized_uthmani": 2.6,
+    "ref_words": 12173,
     "word_counts": {
-     "match": 12142,
-     "deviant": 387,
+     "match": 11854,
+     "deviant": 311,
      "deleted": 7,
-     "inserted": 7
+     "inserted": 5
     },
     "agreement": {
-     "rows_compared": 1846,
-     "words": 12536,
-     "agree": 12529,
-     "agree_pct": 99.94,
-     "agree_convention": 12533,
-     "agree_convention_pct": 99.98,
-     "agree_convention_ties": 12536,
+     "rows_compared": 1780,
+     "words": 12172,
+     "agree": 12160,
+     "agree_pct": 99.9,
+     "agree_convention": 12168,
+     "agree_convention_pct": 99.97,
+     "agree_convention_ties": 12172,
      "agree_convention_ties_pct": 100.0,
-     "ours_flagged": 394,
-     "theirs_flagged": 399,
+     "ours_flagged": 318,
+     "theirs_flagged": 326,
      "disagreement_classes": {
-      "raw:repeat_item": 3,
       "raw:tie_in_scorer_cost": 2,
-      "raw:path_legality": 1,
-      "raw:wasl_edge": 1,
-      "convention_only:tie_in_scorer_cost": 1
+      "raw:repeat_item": 2,
+      "raw:wasl_edge": 8,
+      "convention_only:tie_in_scorer_cost": 2
      }
     }
    }
   },
   "v31": {
    "t1p_panel_correct_dev": {
-    "rows": 969,
-    "converted": 969,
+    "rows": 930,
+    "converted": 930,
     "errors": 0,
-    "wer_undiacritized_imlaei": 1.84,
-    "wer_diacritized_uthmani": 1.91,
-    "ref_words": 6294,
+    "wer_undiacritized_imlaei": 1.23,
+    "wer_diacritized_uthmani": 1.35,
+    "ref_words": 6074,
     "word_counts": {
-     "match": 6173,
-     "deviant": 121,
+     "match": 5991,
+     "deviant": 83,
      "deleted": 0,
-     "inserted": 2
+     "inserted": 1
     },
     "agreement": {
-     "rows_compared": 969,
-     "words": 6294,
-     "agree": 6291,
-     "agree_pct": 99.95,
-     "agree_convention": 6293,
-     "agree_convention_pct": 99.98,
-     "agree_convention_ties": 6294,
+     "rows_compared": 930,
+     "words": 6074,
+     "agree": 6068,
+     "agree_pct": 99.9,
+     "agree_convention": 6072,
+     "agree_convention_pct": 99.97,
+     "agree_convention_ties": 6074,
      "agree_convention_ties_pct": 100.0,
-     "ours_flagged": 121,
-     "theirs_flagged": 122,
+     "ours_flagged": 83,
+     "theirs_flagged": 83,
      "disagreement_classes": {
-      "convention_only:tie_in_scorer_cost": 1,
-      "raw:wasl_edge": 2,
-      "raw:path_legality": 1
+      "raw:wasl_edge": 6,
+      "convention_only:tie_in_scorer_cost": 2
      }
     }
    },
    "t1p_panel_correct_test": {
-    "rows": 1846,
-    "converted": 1846,
+    "rows": 1780,
+    "converted": 1780,
     "errors": 0,
-    "wer_undiacritized_imlaei": 3.48,
-    "wer_diacritized_uthmani": 3.75,
-    "ref_words": 12537,
+    "wer_undiacritized_imlaei": 3.03,
+    "wer_diacritized_uthmani": 3.31,
+    "ref_words": 12173,
     "word_counts": {
-     "match": 12062,
-     "deviant": 468,
+     "match": 11773,
+     "deviant": 393,
      "deleted": 6,
      "inserted": 14
     },
     "agreement": {
-     "rows_compared": 1846,
-     "words": 12536,
-     "agree": 12518,
-     "agree_pct": 99.86,
-     "agree_convention": 12532,
-     "agree_convention_pct": 99.97,
-     "agree_convention_ties": 12536,
+     "rows_compared": 1780,
+     "words": 12172,
+     "agree": 12152,
+     "agree_pct": 99.84,
+     "agree_convention": 12165,
+     "agree_convention_pct": 99.94,
+     "agree_convention_ties": 12172,
      "agree_convention_ties_pct": 100.0,
-     "ours_flagged": 474,
-     "theirs_flagged": 478,
+     "ours_flagged": 399,
+     "theirs_flagged": 413,
      "disagreement_classes": {
       "raw:tie_in_scorer_cost": 4,
       "raw:repeat_item": 9,
-      "raw:path_legality": 4,
-      "raw:wasl_edge": 1
+      "convention_only:tie_in_scorer_cost": 2,
+      "raw:wasl_edge": 7
      }
     }
    }

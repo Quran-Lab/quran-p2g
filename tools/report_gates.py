@@ -38,7 +38,13 @@ def main():
          "0.1.0 G2 misses: 93 (32 tj3g, 61 tj3): 63 were (c), a skip or repeat explained as a stop plus a word "
          "fragment, fixed in the aligner; 30 are (a), identical phone strings. 0.1.0 read-back differences: 491; "
          "after the speller and gate fixes every one left is forced by a named reading rule. G3: no (c); every "
-         "disagreement is (b) or (a).", ""]
+         "disagreement is (b) or (a).", "",
+         "0.1.2 (DESIGN.md, last section): a word re-split after the alignment, so one wrong word is one word error "
+         "(a symmetric test had a replaced word cost 18.11 % WER through the phones against 14.57 % as text), and three "
+         "tajweed-level rules narrowed to where they apply (they hid a few real letter mistakes). Gate G5 is new. "
+         "G2 stays at 100.00 % up to an equivalent attribution; its strict number moves to 99.79 % (tj3g) and 99.78 % "
+         "(tj3) because the re-split can put an edit on a neighbouring word that gives the identical phones. G3 WER "
+         "falls (the double charge is gone) while its word flags still agree with the benchmark's scorer.", ""]
     if g1:
         L += ["## G1 round trip (quran-g2p phones -> quran-p2g -> mushaf text)", "",
               "Inputs come from quran-g2p itself (a fresh single-ayah lattice per ayah, `phonemize`, "
@@ -201,6 +207,30 @@ def main():
               "| quran_transcript | quran-g2p lattice form | words |", "|---|---|---|"]
         for a, b, n in mu["residual_word_pairs_said_vs_expected"][:12]:
             L.append(f"| `{a}` | `{b}` | {n} |")
+        L.append("")
+    g5 = load("g5.json")
+    if g5:
+        why = {"shadda": "a doubled consonant (shadda is a mark, not a letter)",
+               "tanween": "a tanween's noon (tanween is a mark, not a letter)",
+               "written_noon": "a written noon sakin or tanween said openly (same letters)",
+               "ta_marbuta": "ha / ta of a word written with ta marbuta",
+               "seat_fold": "hamza seats and alef maqsura folded by the board's normalisation",
+               "OTHER": "a real snap"}
+        L += ["## G5 no snapping (tools/gate_g5.py, no ayah given)", "",
+              f"{g5['ayat']:,} ayat, canonical reading, one edit per case. Part A: one sound changed; a case is counted "
+              "when the WER charges an error. Every case that is not counted is classified by why the written text "
+              "cannot show it; the gate passes only with no real snap.", "",
+              "| edit | cases | counted | not counted, by reason |", "|---|---|---|---|"]
+        for k, v in g5["A_one_sound"].items():
+            nc = "; ".join(f"{why.get(x.split(':', 1)[1], x)}: {n}" for x, n in sorted(v.items())
+                           if x.startswith("not_counted:"))
+            L.append(f"| {k} | {v['cases']:,} | {v['counted']:,} ({pct(v['counted'], v['cases'])}) | {nc or 'none'} |")
+        L += ["", f"Real snaps: **{len(g5['A_other_cases'])}**.", "",
+              "Part B: the same one-word mistake put into the text a text model would write and into the phones a "
+              "phoneme model would write, both through the same WER.", "",
+              "| edit | cases | text model WER | phones through quran-p2g WER |", "|---|---|---|---|"]
+        for k, v in g5["B_one_word"].items():
+            L.append(f"| {k} | {v['cases']:,} | {v['text_wer']:.2f} % | {v['phones_wer']:.2f} % |")
         L.append("")
     open(os.path.join(ROOT, "docs", "GATES.md"), "w", encoding="utf-8").write("\n".join(L))
     print("\n".join(L))
