@@ -14,7 +14,7 @@ from .retrieve import Candidate, identify
 from .spell import Spelling, spell, spell_words
 from .wer import WerResult, corpus_wer, strip, strip_alef, wer
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __all__ = ["convert", "spell", "spell_words", "identify", "wer", "corpus_wer", "strip", "strip_alef", "tokenize",
            "quran", "parse_ref", "P2GResult", "WordResult", "Inserted", "Spelling", "Candidate", "WerResult",
            "FORMATS", "FormatError", "deviation_level", "__version__"]

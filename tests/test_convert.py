@@ -95,7 +95,10 @@ def test_basmala_prefix_is_reported_not_in_text():
     assert r.text == q.ayah(112, 1).text
     assert r.items[0].kind == "basmala" and r.items[0].match
     r = p2g.convert(toks, "112:1", basmala=False)
-    assert r.counts["match"] < 4
+    # 0.1.3: without the basmala option its phones are extra speech: inserted words of their own, never accepted as
+    # the basmala and never glued onto the first word
+    assert r.items[0].kind != "basmala"
+    assert r.counts["inserted"] >= 2 or r.counts["match"] < 4
 
 
 def test_range_in_wasl_across_ayat():

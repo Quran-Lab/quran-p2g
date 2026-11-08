@@ -1,6 +1,6 @@
 {
  "ayat": 6236,
- "seconds": 159.6,
+ "seconds": 281.0,
  "A_one_sound": {
   "letter_swap": {
    "cases": 6236,
@@ -15,9 +15,9 @@
   },
   "letter_add": {
    "cases": 6236,
-   "counted": 5954,
-   "not_counted:shadda": 265,
-   "not_counted:written_noon": 14,
+   "counted": 5963,
+   "not_counted:shadda": 257,
+   "not_counted:written_noon": 13,
    "not_counted:seat_fold": 3
   }
  },
@@ -31,17 +31,29 @@
   "word_insert": {
    "cases": 6032,
    "text_wer": 7.83,
-   "phones_wer": 8.01
+   "phones_wer": 8.02
   },
   "word_drop": {
    "cases": 6032,
    "text_wer": 7.82,
-   "phones_wer": 7.9
+   "phones_wer": 7.89
   },
   "word_repeat": {
    "cases": 6032,
    "text_wer": 7.83,
-   "phones_wer": 7.83
+   "phones_wer": 7.84
+  }
+ },
+ "C_several": {
+  "two_mistakes": {
+   "cases": 4681,
+   "text_wer": 12.78,
+   "phones_wer": 12.98
+  },
+  "three_adjacent": {
+   "cases": 4681,
+   "text_wer": 17.14,
+   "phones_wer": 17.33
   }
  },
  "pass": true

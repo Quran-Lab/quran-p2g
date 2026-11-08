@@ -366,6 +366,7 @@ def convert(tokens, ayah=None, fmt: str = "tj3", *, open_edges: bool = True, bas
                   open_left=open_edges and ayat[0].prev == "prev", open_right=open_edges and ayat[-1].has_next,
                   free_edges=free_edges, repeats=repeats)
     _rebalance(hyp, preps, al, fmt)
+    _split_extra(hyp, preps, al, fmt)
     return _build(hyp, fmt, words, preps, al, ayat, len(pre), ref_str(s, a0, a1), retrieval)
 
 
@@ -428,6 +429,146 @@ def _lstate(L):
 
 def _rstate(R):
     return AL.S_STOP if R == "waqf" else AL.WASL
+
+
+# ------------------------------------------------------------------------------------------------ extra words
+# 0.1.3: speech that is not part of the ayah (an extra word, isti'adha, a word said between two right ones) was absorbed
+# into a neighbouring word, which then became one deviant word ("rasulan" + "allahi" -> "rasulanllahi"). Alone that
+# costs one WER error either way, but next to another mistake it merged two errors into one ("rabbi" repeated before a
+# wrong "rabbuk" -> one word "rabbirabbuk"), so a phoneme model paid less than a text model for the same mistakes (3
+# mistakes next to each other: 30.65 % WER through the phones against 33.63 % as text). When a deviant word's phones are
+# one of its own legal forms (or a neighbour's: a repeat) plus a word-sized remainder (2 or more consonants) at one
+# end, the remainder becomes an inserted item of its own, written as a separate word. A one-consonant syllable stays
+# inside the word (the G2 inserted_syllable case).
+
+_VOWELS = {"a", "i", "u", "aa", "ii", "uu"}
+
+
+def _consonants(toks):
+    return sum(1 for t in toks if t not in _VOWELS)
+
+
+_LEX = {}
+
+
+def _lexicon(fmt):
+    """every legal form of every Quran word, in a format's matching tokens (for cutting extra speech into words)"""
+    lex = _LEX.get(fmt)
+    if lex is None:
+        lex = set()
+        q = quran()
+        for key in q.keys():
+            for w in q.ayah(*key).words:
+                for f in w.forms:
+                    lex.add(tuple(form_tokens(f.tj3g, f.units, fmt)))
+        _LEX[fmt] = lex
+    return lex
+
+
+def _known_cover(toks, fmt):
+    """the fewest Quran word forms, each of two or more consonants (a word's worth: no one-letter pieces), that exactly
+    cover toks [(i, j)], or None"""
+    lex = _lexicon(fmt)
+    n = len(toks)
+    best = [(0, None)] + [(10 ** 9, None)] * n
+    for j in range(1, n + 1):
+        for i in range(max(0, j - 24), j):
+            if best[i][0] + 1 < best[j][0] and _consonants(toks[i:j]) >= 2 and tuple(toks[i:j]) in lex:
+                best[j] = (best[i][0] + 1, i)
+    if best[n][1] is None:
+        return None
+    spans, j = [], n
+    while j > 0:
+        i = best[j][1]
+        spans.append((i, j))
+        j = i
+    return spans[::-1]
+
+
+def _cut_words(toks, fmt):
+    """extra speech -> word-sized spans: the Quran words it is made of when it is made only of Quran words (as many
+    words as a text model would write), else one piece (unknown speech is never chopped into made-up words)"""
+    return _known_cover(toks, fmt) or [(0, len(toks))]
+
+
+def _split_extra(hyp, preps, al, fmt):
+    ws = sorted(al.words, key=lambda x: x.word)
+    by = {x.word: x for x in ws}
+    new_ins = []
+    for x in ws:
+        said = tuple(hyp[x.j0:x.j1])
+        forms = [tuple(f) for f in preps[x.word][0]]
+        if not said or said in forms:
+            continue
+        best = None
+        for f in forms:
+            n = len(f)
+            if n == 0 or n >= len(said):
+                continue
+            for side in ("pre", "suf"):                  # extra before the word / after it
+                if (side == "suf" and said[:n] == f) or (side == "pre" and said[-n:] == f):
+                    extra = said[n:] if side == "suf" else said[:len(said) - n]
+                    if _consonants(extra) >= 2 and (best is None or n > best[0]):
+                        best = (n, side, forms.index(f), None)
+        if best is None:                                  # a neighbour's legal form at one end: a glued repeat
+            for nb, side in ((x.word - 1, "pre"), (x.word + 1, "suf")):
+                if nb not in by:
+                    continue
+                for f in (tuple(t) for t in preps[nb][0]):
+                    n = len(f)
+                    if n == 0 or n >= len(said) or _consonants(f) < 2:
+                        continue
+                    if (side == "pre" and said[:n] == f) or (side == "suf" and said[-n:] == f):
+                        if best is None or n > best[0]:
+                            best = (n, side, None, nb)
+        if best is None:
+            continue
+        n, side, fi, nb = best
+        if nb is None:                                    # the word itself matched; the rest is extra
+            if side == "suf":
+                e0, e1, x.j1 = x.j0 + n, x.j1, x.j0 + n
+                bnd = x.word + 1
+            else:
+                e0, e1, x.j0 = x.j0, x.j1 - n, x.j1 - n
+                bnd = x.word
+            x.form, x.skipped = fi, False
+            for i, j in _cut_words(hyp[e0:e1], fmt):
+                new_ins.append(AL.Insertion(bnd, e0 + i, e0 + j, "extra"))
+        else:                                             # the neighbour repeated, glued to this word
+            if side == "pre":
+                r0, r1, x.j0 = x.j0, x.j0 + n, x.j0 + n
+                bnd = x.word
+            else:
+                r0, r1, x.j1 = x.j1 - n, x.j1, x.j1 - n
+                bnd = x.word + 1
+            new_ins.append(AL.Insertion(bnd, r0, r1, "repeat", of_word=nb))
+    # a deviant word whose phones are made ENTIRELY of two or more Quran words, none of which alone covers them (a wrong
+    # word glued to an extra word): two words were said, as a text model would write them. The piece closest to the
+    # expected word stays the word; the others become inserted words. The phones must also hold at least two consonants
+    # more than the word's longest legal form (a changed vowel or letter adds none). A single substituted Quran word is one known word
+    # (cover of one piece) and garbled phones are not made of known words, so neither is split. Tried: splitting
+    # whenever a known-word end made the rest fit better (split single wrong words in two: 18.36 % against 14.57 %).
+    done = {i.boundary for i in new_ins}
+    for x in ws:
+        said = list(hyp[x.j0:x.j1])
+        forms = [list(f) for f in preps[x.word][0]]
+        if not said or tuple(said) in [tuple(f) for f in forms] or x.word in done or x.word + 1 in done:
+            continue
+        if _consonants(said) < max(_consonants(f) for f in forms) + 2:
+            continue                                  # no extra word-sized material: one word read wrongly
+        cov = _known_cover(said, fmt)
+        if cov is None or len(cov) < 2:
+            continue
+        fits = [min((_lev_ops(f, said[i:j], fmt)[0], fi) for fi, f in enumerate(forms)) for i, j in cov]
+        kw = min(range(len(cov)), key=lambda k: fits[k][0])
+        j0 = x.j0
+        for k, (i, j) in enumerate(cov):
+            if k != kw:
+                new_ins.append(AL.Insertion(x.word if k < kw else x.word + 1, j0 + i, j0 + j, "extra"))
+        x.j0, x.j1 = j0 + cov[kw][0], j0 + cov[kw][1]
+        x.form, x.skipped = fits[kw][1], False
+    al.insertions.extend(new_ins)
+    al.insertions.sort(key=lambda i: (i.boundary, i.j0))
 
 
 def _rebalance(hyp, preps, al, fmt):
@@ -500,7 +641,8 @@ def _build(hyp, fmt, words, preps, al, ayat, n_pre, ref, retrieval):
                         it.text, it.text_imlaei = sp.diacritized, sp.plain
             else:
                 sp = spell_core(to_core(ph, fmt))
-                it = Inserted("edge", ph, after, text=sp.diacritized, text_imlaei=sp.plain)
+                it = Inserted("extra" if ins.kind == "extra" else "edge", ph, after, text=sp.diacritized,
+                              text_imlaei=sp.plain)
             items.append(it)
 
     # the basmala prefix

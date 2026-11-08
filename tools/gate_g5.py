@@ -28,6 +28,10 @@ phones a phoneme model would write; both go through the same WER. The gap is the
   word_insert    a word of another ayah inserted inside the ayah
   word_drop      a word not said
   word_repeat    a word said twice
+
+Part C, several mistakes together (two cases per ayah of 6+ words): two, and three side by side, of the Part B edits
+(random kinds), again into the text and into the phones. Words next to each other have no boundary in the phones, so
+this is where a phones-to-text step can merge two mistakes into one (0.1.2 did: 30.65 % against 33.63 %).
 """
 from __future__ import annotations
 
@@ -113,7 +117,7 @@ def run_ayah(job):
     rng = random.Random(f"{seed}:{s}:{a}")
     ws = words_of(s, a)
     key = f"{s}:{a}"
-    out = {"A": [], "B": []}
+    out = {"A": [], "B": [], "C": []}
     flat = lambda W: " ".join(t for w in W for t in w)
     base = [list(w[0]) for w in ws]
     # Part A
@@ -169,6 +173,35 @@ def run_ayah(job):
         except Exception:
             ep = ref_words
         out["B"].append({"kind": kind, "text": et, "phones": ep, "ref": ref_words})
+    # Part C
+    for kind, m, adjacent in (("two_mistakes", 2, False), ("three_adjacent", 3, True)):
+        if n < 6:
+            continue
+        W = [list(w) for w in base]
+        T = [w[2] for w in ws]
+        if adjacent:
+            st = rng.randrange(1, n - m)
+            pos = list(range(st, st + m))
+        else:
+            pos = sorted(rng.sample(range(1, n - 1), m))
+        for i in reversed(pos):
+            op = rng.choice(["swap", "insert", "drop", "repeat"])
+            fp, ft = rng.choice(pool_words)
+            if op == "swap":
+                W[i], T[i] = list(fp), ft
+            elif op == "insert":
+                W.insert(i, list(fp)); T.insert(i, ft)
+            elif op == "drop":
+                del W[i]; del T[i]
+            else:
+                W.insert(i + 1, list(W[i])); T.insert(i + 1, T[i])
+        txt = " ".join(x for x in T if x)
+        rw = P.wer(txt, key)
+        try:
+            ep = P.wer(P.convert(flat(W), None, "tj3"), key).errors
+        except Exception:
+            ep = rw.ref_words
+        out["C"].append({"kind": kind, "text": rw.errors, "phones": ep, "ref": rw.ref_words})
     return out
 
 
@@ -211,11 +244,21 @@ def main():
             c["text_err"] += x["text"]
             c["phone_err"] += x["phones"]
             c["ref"] += x["ref"]
+    C = collections.defaultdict(collections.Counter)
+    for r in recs:
+        for x in r["C"]:
+            c = C[x["kind"]]
+            c["cases"] += 1
+            c["text_err"] += x["text"]
+            c["phone_err"] += x["phones"]
+            c["ref"] += x["ref"]
     res = {"ayat": len(keys), "seconds": round(time.time() - t0, 1),
            "A_one_sound": {k: dict(v) for k, v in A.items()},
            "A_other_cases": other,
            "B_one_word": {k: {"cases": v["cases"], "text_wer": round(100 * v["text_err"] / v["ref"], 2),
                               "phones_wer": round(100 * v["phone_err"] / v["ref"], 2)} for k, v in B.items()},
+           "C_several": {k: {"cases": v["cases"], "text_wer": round(100 * v["text_err"] / v["ref"], 2),
+                             "phones_wer": round(100 * v["phone_err"] / v["ref"], 2)} for k, v in C.items()},
            "pass": len(other) == 0}
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
     json.dump(res, open(args.out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)

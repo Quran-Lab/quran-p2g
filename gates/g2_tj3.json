@@ -2,45 +2,45 @@
  "fmt": "tj3",
  "planted_cases": 24864,
  "skipped_no_site": 80,
- "seconds": 40.9,
+ "seconds": 44.8,
  "by_type": {
   "inserted_syllable": {
    "cases": 4149,
-   "exact_pct": 99.42,
-   "exact": 4125,
+   "exact_pct": 98.53,
+   "exact": 4088,
    "exact_equiv_pct": 100.0,
    "exact_equiv": 4149,
    "equiv_same_string": 17,
-   "equiv_equal_cost": 7,
-   "precision": 99.42,
-   "recall": 99.49,
+   "equiv_equal_cost": 44,
+   "precision": 98.53,
+   "recall": 98.6,
    "precision_equiv": 100.0,
    "recall_equiv": 100.0,
-   "readback_cases": 4128,
-   "readback_equal": 4113,
-   "readback_equal_pct": 99.64,
+   "readback_cases": 4091,
+   "readback_equal": 4076,
+   "readback_equal_pct": 99.63,
    "readback_equal_without_reference": 1,
    "readback_rules": {
     "ikhfa_before_non_ikhfa": 10
    },
-   "readback_equal_or_rule": 4124,
+   "readback_equal_or_rule": 4087,
    "readback_equal_or_rule_pct": 99.9,
    "readback_engine_refused": 1
   },
   "ALL": {
    "cases": 24864,
-   "exact_pct": 99.78,
-   "exact": 24810,
+   "exact_pct": 99.63,
+   "exact": 24772,
    "exact_equiv_pct": 100.0,
    "exact_equiv": 24864,
    "equiv_same_string": 19,
-   "equiv_equal_cost": 35,
-   "precision": 99.79,
-   "recall": 99.8,
+   "equiv_equal_cost": 73,
+   "precision": 99.63,
+   "recall": 99.65,
    "precision_equiv": 100.0,
    "recall_equiv": 100.0,
-   "readback_cases": 16536,
-   "readback_equal": 16297,
+   "readback_cases": 16499,
+   "readback_equal": 16259,
    "readback_equal_pct": 98.55,
    "readback_equal_without_reference": 1,
    "readback_rules": {
@@ -49,9 +49,9 @@
     "ikhfa_before_non_ikhfa": 10,
     "waqf_final_short_vowel": 38
    },
-   "readback_equal_or_rule": 16532,
-   "readback_equal_or_rule_pct": 99.98,
-   "readback_engine_refused": 1
+   "readback_equal_or_rule": 16494,
+   "readback_equal_or_rule_pct": 99.97,
+   "readback_engine_refused": 2
   },
   "vowel_swap": {
    "cases": 4147,
@@ -76,24 +76,24 @@
   },
   "consonant_swap": {
    "cases": 4147,
-   "exact_pct": 100.0,
-   "exact": 4147,
+   "exact_pct": 99.98,
+   "exact": 4146,
    "exact_equiv_pct": 100.0,
    "exact_equiv": 4147,
    "equiv_same_string": 0,
-   "equiv_equal_cost": 0,
-   "precision": 100.0,
+   "equiv_equal_cost": 1,
+   "precision": 99.98,
    "recall": 100.0,
    "precision_equiv": 100.0,
    "recall_equiv": 100.0,
    "readback_cases": 4147,
-   "readback_equal": 4147,
-   "readback_equal_pct": 100.0,
+   "readback_equal": 4146,
+   "readback_equal_pct": 99.98,
    "readback_equal_without_reference": 0,
    "readback_rules": {},
-   "readback_equal_or_rule": 4147,
-   "readback_equal_or_rule_pct": 100.0,
-   "readback_engine_refused": 0
+   "readback_equal_or_rule": 4146,
+   "readback_equal_or_rule_pct": 99.98,
+   "readback_engine_refused": 1
   },
   "long_short": {
    "cases": 4142,
@@ -271,6 +271,81 @@
    "fn_eq": 0
   },
   {
+   "ayah": "3:64",
+   "type": "inserted_syllable",
+   "word": 6,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "س u م",
+     null
+    ]
+   ],
+   "planted": "س a و aa ء i س u م",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "3:77",
+   "type": "inserted_syllable",
+   "word": 25,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ق u ن",
+     null
+    ]
+   ],
+   "planted": "ع a ذ aa ب u ق u ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "3:105",
+   "type": "inserted_syllable",
+   "word": 12,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "خ i ن",
+     null
+    ]
+   ],
+   "planted": "ع a ذ aa ب u خ i ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "3:129",
    "type": "inserted_syllable",
    "word": 8,
@@ -290,6 +365,31 @@
    "same_string_words": [
     7
    ],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "3:152",
+   "type": "inserted_syllable",
+   "word": 37,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ح u ن",
+     null
+    ]
+   ],
+   "planted": "ف a ض ل i ح u ن",
+   "same_string_words": [],
    "cost_planted": 8,
    "cost_output": 8,
    "tp_eq": 1,
@@ -347,6 +447,64 @@
    "fn_eq": 0
   },
   {
+   "ayah": "4:78",
+   "type": "consonant_swap",
+   "word": 25,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 1,
+   "fp": 1,
+   "fn": 0,
+   "got": [
+    [
+     25,
+     "deviant",
+     "u"
+    ],
+    [
+     "ins",
+     "repeat",
+     "ق u ل",
+     "4:78:24"
+    ]
+   ],
+   "planted": "ق u ل u",
+   "same_string_words": [],
+   "cost_planted": 4,
+   "cost_output": 4,
+   "tp_eq": 2,
+   "fp_eq": 0,
+   "fn_eq": 0,
+   "readback": "engine_refused:DecodeError",
+   "spelled": "اُ",
+   "readback_got": ""
+  },
+  {
+   "ayah": "5:98",
+   "type": "inserted_syllable",
+   "word": 0,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ء i ح a",
+     null
+    ]
+   ],
+   "planted": "ء i ح a ع ل a م uu",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "6:23",
    "type": "inserted_syllable",
    "word": 1,
@@ -366,6 +524,31 @@
    "same_string_words": [
     0
    ],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "6:68",
+   "type": "inserted_syllable",
+   "word": 11,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "س u ن",
+     null
+    ]
+   ],
+   "planted": "ح a د ii ث i س u ن",
+   "same_string_words": [],
    "cost_planted": 8,
    "cost_output": 8,
    "tp_eq": 1,
@@ -453,6 +636,31 @@
    "readback_got": "ء i م"
   },
   {
+   "ayah": "8:68",
+   "type": "inserted_syllable",
+   "word": 8,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ث i ن",
+     null
+    ]
+   ],
+   "planted": "ع a ذ aa ب u ث i ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "8:75",
    "type": "inserted_syllable",
    "word": 5,
@@ -472,6 +680,31 @@
    "same_string_words": [
     4
    ],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "9:57",
+   "type": "inserted_syllable",
+   "word": 4,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "م u ن",
+     null
+    ]
+   ],
+   "planted": "م a غ aa ر aa ت i م u ن",
+   "same_string_words": [],
    "cost_planted": 8,
    "cost_output": 8,
    "tp_eq": 1,
@@ -503,6 +736,56 @@
    "fn_eq": 0
   },
   {
+   "ayah": "10:107",
+   "type": "inserted_syllable",
+   "word": 11,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ل a ں",
+     null
+    ]
+   ],
+   "planted": "ب i خ a ي ر i ل a ں",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "11:26",
+   "type": "inserted_syllable",
+   "word": 9,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ف u ن",
+     null
+    ]
+   ],
+   "planted": "ي a و م i ف u ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "11:60",
    "type": "long_short",
    "word": 9,
@@ -522,6 +805,31 @@
    "same_string_words": [],
    "cost_planted": 2,
    "cost_output": 2,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "13:34",
+   "type": "inserted_syllable",
+   "word": 1,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ح u ں",
+     null
+    ]
+   ],
+   "planted": "ع a ذ aa ب u ح u ں",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
    "tp_eq": 1,
    "fp_eq": 0,
    "fn_eq": 0
@@ -579,6 +887,31 @@
    "fn_eq": 0
   },
   {
+   "ayah": "16:71",
+   "type": "inserted_syllable",
+   "word": 18,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ق i ن",
+     null
+    ]
+   ],
+   "planted": "س a و aa ء u ق i ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "17:26",
    "type": "inserted_syllable",
    "word": 7,
@@ -629,6 +962,31 @@
    "fn_eq": 0
   },
   {
+   "ayah": "18:44",
+   "type": "inserted_syllable",
+   "word": 7,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ع u ن",
+     null
+    ]
+   ],
+   "planted": "و a خ a ي ر u ع u ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "18:83",
    "type": "inserted_syllable",
    "word": 6,
@@ -648,6 +1006,56 @@
    "same_string_words": [
     5
    ],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "18:101",
+   "type": "inserted_syllable",
+   "word": 4,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ب u ن",
+     null
+    ]
+   ],
+   "planted": "غ i ط aa ء i ب u ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "20:24",
+   "type": "inserted_syllable",
+   "word": 0,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ء i غ a",
+     null
+    ]
+   ],
+   "planted": "ء i غ a ذ ه a ب",
+   "same_string_words": [],
    "cost_planted": 8,
    "cost_output": 8,
    "tp_eq": 1,
@@ -808,6 +1216,31 @@
    "fn_eq": 0
   },
   {
+   "ayah": "24:63",
+   "type": "inserted_syllable",
+   "word": 25,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ف a ن",
+     null
+    ]
+   ],
+   "planted": "ع a ذ aa ب u ف a ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "25:13",
    "type": "inserted_syllable",
    "word": 5,
@@ -834,6 +1267,81 @@
    "fn_eq": 0
   },
   {
+   "ayah": "25:23",
+   "type": "inserted_syllable",
+   "word": 5,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ظ a ں",
+     null
+    ]
+   ],
+   "planted": "ع a م a ل i ظ a ں",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "26:162",
+   "type": "inserted_syllable",
+   "word": 2,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ص a ن",
+     null
+    ]
+   ],
+   "planted": "ر a س uu ل u ص a ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "26:177",
+   "type": "inserted_syllable",
+   "word": 3,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ب a ن",
+     null
+    ]
+   ],
+   "planted": "ش u ع a ي ب u ب a ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "27:12",
    "type": "long_short",
    "word": 17,
@@ -853,6 +1361,31 @@
    "same_string_words": [],
    "cost_planted": 2,
    "cost_output": 2,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "30:11",
+   "type": "inserted_syllable",
+   "word": 0,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ء a ت i",
+     null
+    ]
+   ],
+   "planted": "ء a ت i ل aa ه u",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
    "tp_eq": 1,
    "fp_eq": 0,
    "fn_eq": 0
@@ -914,6 +1447,31 @@
    "fn_eq": 0
   },
   {
+   "ayah": "31:23",
+   "type": "inserted_syllable",
+   "word": 12,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ع a م",
+     null
+    ]
+   ],
+   "planted": "ع a ل ii م u ع a م",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "32:27",
    "type": "long_short",
    "word": 10,
@@ -964,6 +1522,31 @@
    "fn_eq": 0
   },
   {
+   "ayah": "33:23",
+   "type": "inserted_syllable",
+   "word": 2,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ر a ں",
+     null
+    ]
+   ],
+   "planted": "ر i ج aa ل u ر a ں",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "33:47",
    "type": "long_short",
    "word": 6,
@@ -983,6 +1566,81 @@
    "same_string_words": [],
    "cost_planted": 2,
    "cost_output": 2,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "34:7",
+   "type": "inserted_syllable",
+   "word": 14,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "س i ں",
+     null
+    ]
+   ],
+   "planted": "خ a ل ق i س i ں",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "35:6",
+   "type": "inserted_syllable",
+   "word": 3,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ح a ں",
+     null
+    ]
+   ],
+   "planted": "ع a د u و u ح a ں",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "36:14",
+   "type": "inserted_syllable",
+   "word": 6,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ذ u ں",
+     null
+    ]
+   ],
+   "planted": "ب i ث aa ل i ث i ذ u ں",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
    "tp_eq": 1,
    "fp_eq": 0,
    "fn_eq": 0
@@ -1132,6 +1790,81 @@
    "fn_eq": 0
   },
   {
+   "ayah": "41:43",
+   "type": "inserted_syllable",
+   "word": 15,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ع a ن",
+     null
+    ]
+   ],
+   "planted": "ع i ق aa ب i ع a ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "42:17",
+   "type": "inserted_syllable",
+   "word": 0,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ء a س i",
+     null
+    ]
+   ],
+   "planted": "ء a س i ل aa ه u",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "43:7",
+   "type": "inserted_syllable",
+   "word": 3,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ض i ن",
+     null
+    ]
+   ],
+   "planted": "ن a ب i ي i ض i ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "43:28",
    "type": "long_short",
    "word": 4,
@@ -1151,6 +1884,81 @@
    "same_string_words": [],
    "cost_planted": 2,
    "cost_output": 2,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "43:58",
+   "type": "inserted_syllable",
+   "word": 12,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ب i ن",
+     null
+    ]
+   ],
+   "planted": "ق a و م u ب i ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "43:65",
+   "type": "inserted_syllable",
+   "word": 9,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ي u ن",
+     null
+    ]
+   ],
+   "planted": "ي a و م i ي u ن",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "44:26",
+   "type": "inserted_syllable",
+   "word": 1,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "خ i ں",
+     null
+    ]
+   ],
+   "planted": "و a م a ق aa م i خ i ں",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
    "tp_eq": 1,
    "fp_eq": 0,
    "fn_eq": 0
@@ -1182,6 +1990,56 @@
    "fn_eq": 0
   },
   {
+   "ayah": "50:7",
+   "type": "inserted_syllable",
+   "word": 9,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ء a م",
+     null
+    ]
+   ],
+   "planted": "ز a و ج i ء a م",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "51:11",
+   "type": "inserted_syllable",
+   "word": 0,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ء a ط u",
+     null
+    ]
+   ],
+   "planted": "ء a ط u ل a ذ ii ن a",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "52:40",
    "type": "long_short",
    "word": 2,
@@ -1201,6 +2059,31 @@
    "same_string_words": [],
    "cost_planted": 2,
    "cost_output": 2,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "57:23",
+   "type": "inserted_syllable",
+   "word": 13,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "س a ں",
+     null
+    ]
+   ],
+   "planted": "م u خ ت aa ل i س a ں",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
    "tp_eq": 1,
    "fp_eq": 0,
    "fn_eq": 0
@@ -1402,6 +2285,31 @@
    "fn_eq": 0
   },
   {
+   "ayah": "81:9",
+   "type": "inserted_syllable",
+   "word": 1,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ص u ں",
+     null
+    ]
+   ],
+   "planted": "ذ a م ب i ص u ں",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
    "ayah": "83:27",
    "type": "long_short",
    "word": 0,
@@ -1445,6 +2353,31 @@
    "same_string_words": [
     2
    ],
+   "cost_planted": 8,
+   "cost_output": 8,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "86:3",
+   "type": "inserted_syllable",
+   "word": 0,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ء a ط i",
+     null
+    ]
+   ],
+   "planted": "ء a ط i ن a ج م u",
+   "same_string_words": [],
    "cost_planted": 8,
    "cost_output": 8,
    "tp_eq": 1,
@@ -1503,6 +2436,31 @@
    "same_string_words": [],
    "cost_planted": 2,
    "cost_output": 2,
+   "tp_eq": 1,
+   "fp_eq": 0,
+   "fn_eq": 0
+  },
+  {
+   "ayah": "114:5",
+   "type": "inserted_syllable",
+   "word": 0,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 0,
+   "fp": 1,
+   "fn": 1,
+   "got": [
+    [
+     "ins",
+     "extra",
+     "ء a م a",
+     null
+    ]
+   ],
+   "planted": "ء a م a ل a ذ ii",
+   "same_string_words": [],
+   "cost_planted": 8,
+   "cost_output": 8,
    "tp_eq": 1,
    "fp_eq": 0,
    "fn_eq": 0
@@ -2035,6 +2993,39 @@
    "spelled": "أَوْلِيَاءَا",
    "readback_got": "ء a و ل i ي aa ء a",
    "planted": "ء a و ل i ي aa ء aa"
+  },
+  {
+   "ayah": "4:78",
+   "type": "consonant_swap",
+   "word": 25,
+   "exact": false,
+   "equiv": "equal_cost",
+   "tp": 1,
+   "fp": 1,
+   "fn": 0,
+   "got": [
+    [
+     25,
+     "deviant",
+     "u"
+    ],
+    [
+     "ins",
+     "repeat",
+     "ق u ل",
+     "4:78:24"
+    ]
+   ],
+   "planted": "ق u ل u",
+   "same_string_words": [],
+   "cost_planted": 4,
+   "cost_output": 4,
+   "tp_eq": 2,
+   "fp_eq": 0,
+   "fn_eq": 0,
+   "readback": "engine_refused:DecodeError",
+   "spelled": "اُ",
+   "readback_got": ""
   },
   {
    "ayah": "4:88",

@@ -263,3 +263,20 @@ Three tajweed-level rules were too broad and hid real letter mistakes; each now 
 - noon against meem (iqlab): only before ba, and a meem read as noon only where the written letter is a noon
   ("lakun" for "lakum" was hidden).
 
+
+## 0.1.3: extra speech is its own word
+
+A second symmetric test put two or three word mistakes into one ayah. 0.1.2 charged the phoneme path LESS than the
+text path there (three mistakes side by side: 30.65 % against 33.63 %): speech that was not part of the ayah was
+absorbed into a neighbouring word, so an extra word next to a wrong word became one deviant word ("rabbirabbuk"),
+two mistakes counted as one. After the re-split, extra speech is cut out as inserted items of its own:
+- a deviant word that is one of its own legal forms (or a neighbour's: a repeat) plus a remainder of two or more
+  consonants at one end: the remainder is inserted;
+- a deviant word made entirely of two or more Quran words, none of which alone covers it, and at least two consonants
+  longer than the word's longest legal form: the piece closest to the word stays the word, the others are inserted;
+- inserted speech is cut into Quran words (each of two or more consonants) when it is made only of them, else kept as
+  one piece.
+Tried and rejected: splitting whenever taking a known-word end made the rest fit the expected word better (it cut
+single wrong words in two: 18.36 % against 14.57 %), and allowing one-consonant pieces (it cut "fa" and "wa" off as
+words). After the fix, gate G5: one word 7.97 / 8.02 / 7.89 / 7.84 % against 7.81 / 7.83 / 7.82 / 7.83 % as text;
+two mistakes 12.98 % against 12.78 %; three side by side 17.33 % against 17.14 %; one sound changed: 0 snaps.

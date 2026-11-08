@@ -44,7 +44,10 @@ def main():
          "tajweed-level rules narrowed to where they apply (they hid a few real letter mistakes). Gate G5 is new. "
          "G2 stays at 100.00 % up to an equivalent attribution; its strict number moves to 99.79 % (tj3g) and 99.78 % "
          "(tj3) because the re-split can put an edit on a neighbouring word that gives the identical phones. G3 WER "
-         "falls (the double charge is gone) while its word flags still agree with the benchmark's scorer.", ""]
+         "falls (the double charge is gone) while its word flags still agree with the benchmark's scorer.", "",
+         "0.1.3: extra speech (a word not in the ayah, a glued repeat) is written as words of its own; G5 adds several "
+         "mistakes together (0.1.2 charged three adjacent mistakes 30.65 % through the phones against 33.63 % as text; "
+         "0.1.3: 17.33 % against 17.14 % on the G5 set).", ""]
     if g1:
         L += ["## G1 round trip (quran-g2p phones -> quran-p2g -> mushaf text)", "",
               "Inputs come from quran-g2p itself (a fresh single-ayah lattice per ayah, `phonemize`, "
@@ -231,6 +234,8 @@ def main():
               "| edit | cases | text model WER | phones through quran-p2g WER |", "|---|---|---|---|"]
         for k, v in g5["B_one_word"].items():
             L.append(f"| {k} | {v['cases']:,} | {v['text_wer']:.2f} % | {v['phones_wer']:.2f} % |")
+        for k, v in (g5.get("C_several") or {}).items():
+            L.append(f"| {k} (several mistakes together) | {v['cases']:,} | {v['text_wer']:.2f} % | {v['phones_wer']:.2f} % |")
         L.append("")
     open(os.path.join(ROOT, "docs", "GATES.md"), "w", encoding="utf-8").write("\n".join(L))
     print("\n".join(L))

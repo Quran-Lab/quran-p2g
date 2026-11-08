@@ -19,6 +19,8 @@ Every 0.1.0 G2 miss and G3 disagreement was put in one class: an attribution tie
 
 0.1.2 (DESIGN.md, last section): a word re-split after the alignment, so one wrong word is one word error (a symmetric test had a replaced word cost 18.11 % WER through the phones against 14.57 % as text), and three tajweed-level rules narrowed to where they apply (they hid a few real letter mistakes). Gate G5 is new. G2 stays at 100.00 % up to an equivalent attribution; its strict number moves to 99.79 % (tj3g) and 99.78 % (tj3) because the re-split can put an edit on a neighbouring word that gives the identical phones. G3 WER falls (the double charge is gone) while its word flags still agree with the benchmark's scorer.
 
+0.1.3: extra speech (a word not in the ayah, a glued repeat) is written as words of its own; G5 adds several mistakes together (0.1.2 charged three adjacent mistakes 30.65 % through the phones against 33.63 % as text; 0.1.3: 17.33 % against 17.14 % on the G5 set).
+
 ## G1 round trip (quran-g2p phones -> quran-p2g -> mushaf text)
 
 Inputs come from quran-g2p itself (a fresh single-ayah lattice per ayah, `phonemize`, `phonemize_concat`), never from the packaged artifact. Pass = every word a match, no insertion, Uthmani and imla'i text identical to the mushaf.
@@ -43,16 +45,16 @@ Inputs come from quran-g2p itself (a fresh single-ayah lattice per ayah, `phonem
 
 | edit | cases | exact strict | exact equivalent | precision | recall | read-back equal | read-back equal or named rule |
 |---|---|---|---|---|---|---|---|
-| vowel_swap | 3,543 | 100.00 % | 100.00 % | 100.00 / 100.00 % | 100.00 / 100.00 % | 100.00 % of 3,543 | 100.00 % |
+| vowel_swap | 3,543 | 99.97 % | 100.00 % | 99.97 / 100.00 % | 100.00 / 100.00 % | 99.97 % of 3,543 | 99.97 % |
 | consonant_swap | 3,544 | 100.00 % | 100.00 % | 100.00 / 100.00 % | 100.00 / 100.00 % | 99.89 % of 3,544 | 100.00 % |
 | long_short | 3,553 | 99.24 % | 100.00 % | 99.24 / 100.00 % | 99.24 / 100.00 % | 94.81 % of 3,526 | 100.00 % |
-| shadda_drop | 3,084 | 100.00 % | 100.00 % | 100.00 / 100.00 % | 100.00 / 100.00 % | 99.97 % of 3,084 | 100.00 % |
+| shadda_drop | 3,084 | 99.97 % | 100.00 % | 99.97 / 100.00 % | 100.00 / 100.00 % | 99.94 % of 3,084 | 99.97 % |
 | word_skip | 3,563 | 100.00 % | 100.00 % | 100.00 / 100.00 % | 100.00 / 100.00 % | n/a | n/a |
 | word_repeat | 3,555 | 100.00 % | 100.00 % | 100.00 / 100.00 % | 100.00 / 100.00 % | n/a | n/a |
-| inserted_syllable | 3,544 | 99.35 % | 100.00 % | 99.35 / 100.00 % | 99.66 / 100.00 % | 99.52 % of 3,532 | 99.69 % |
-| **all** | 24,386 | 99.79 % | 100.00 % | 99.80 / 100.00 % | 99.84 / 100.00 % | 98.81 % of 17,229 | 99.94 % |
+| inserted_syllable | 3,544 | 98.36 % | 100.00 % | 98.37 / 100.00 % | 98.67 / 100.00 % | 99.51 % of 3,497 | 99.69 % |
+| **all** | 24,386 | 99.64 % | 100.00 % | 99.64 / 100.00 % | 99.70 / 100.00 % | 98.80 % of 17,194 | 99.92 % |
 
-Equivalent attributions: 10 cases (identical phone string), 40 by equal cost only. Strict misses by edit type: long_short 27, inserted_syllable 23.
+Equivalent attributions: 10 cases (identical phone string), 77 by equal cost only. Strict misses by edit type: vowel_swap 1, long_short 27, shadda_drop 1, inserted_syllable 58.
 
 Read-back differences by rule (each one checked mechanically; see `tools/gate_g2.py`):
 
@@ -65,7 +67,7 @@ Read-back differences by rule (each one checked mechanically; see `tools/gate_g2
 | `idgham_mithlayn` | 3 | a sakin consonant before the same consonant merges with it into one held consonant (inside the word or across the boundary) |
 | `equal_without_reference` | 3 | quran-g2p refuses a spelling at a word its ayah reference pins (a muqatta'at letter name, the tasheel of 41:44); read without the reference it gives the planted tokens |
 
-Read-back cases left unexplained: 11; refused by the engine: 5.
+Read-back cases left unexplained: 13; refused by the engine: 5.
 
 ## G2 planted single edits (tj3)
 
@@ -79,14 +81,14 @@ Read-back cases left unexplained: 11; refused by the engine: 5.
 | edit | cases | exact strict | exact equivalent | precision | recall | read-back equal | read-back equal or named rule |
 |---|---|---|---|---|---|---|---|
 | vowel_swap | 4,147 | 100.00 % | 100.00 % | 100.00 / 100.00 % | 100.00 / 100.00 % | 100.00 % of 4,147 | 100.00 % |
-| consonant_swap | 4,147 | 100.00 % | 100.00 % | 100.00 / 100.00 % | 100.00 / 100.00 % | 100.00 % of 4,147 | 100.00 % |
+| consonant_swap | 4,147 | 99.98 % | 100.00 % | 99.98 / 100.00 % | 100.00 / 100.00 % | 99.98 % of 4,147 | 99.98 % |
 | long_short | 4,142 | 99.32 % | 100.00 % | 99.32 / 100.00 % | 99.32 / 100.00 % | 94.56 % of 4,114 | 100.00 % |
 | word_skip | 4,136 | 99.98 % | 100.00 % | 99.98 / 100.00 % | 99.98 / 100.00 % | n/a | n/a |
 | word_repeat | 4,143 | 99.98 % | 100.00 % | 100.00 / 100.00 % | 100.00 / 100.00 % | n/a | n/a |
-| inserted_syllable | 4,149 | 99.42 % | 100.00 % | 99.42 / 100.00 % | 99.49 / 100.00 % | 99.64 % of 4,128 | 99.90 % |
-| **all** | 24,864 | 99.78 % | 100.00 % | 99.79 / 100.00 % | 99.80 / 100.00 % | 98.55 % of 16,536 | 99.98 % |
+| inserted_syllable | 4,149 | 98.53 % | 100.00 % | 98.53 / 100.00 % | 98.60 / 100.00 % | 99.63 % of 4,091 | 99.90 % |
+| **all** | 24,864 | 99.63 % | 100.00 % | 99.63 / 100.00 % | 99.65 / 100.00 % | 98.55 % of 16,499 | 99.97 % |
 
-Equivalent attributions: 19 cases (identical phone string), 35 by equal cost only. Strict misses by edit type: long_short 28, word_skip 1, word_repeat 1, inserted_syllable 24.
+Equivalent attributions: 19 cases (identical phone string), 73 by equal cost only. Strict misses by edit type: consonant_swap 1, long_short 28, word_skip 1, word_repeat 1, inserted_syllable 61.
 
 Read-back differences by rule (each one checked mechanically; see `tools/gate_g2.py`):
 
@@ -98,7 +100,7 @@ Read-back differences by rule (each one checked mechanically; see `tools/gate_g2
 | `ikhfa_before_non_ikhfa` | 10 | the ikhfa nasal exists only before the 15 ikhfa letters; a bare noon before any other letter is read by that letter's noon rule |
 | `equal_without_reference` | 1 | quran-g2p refuses a spelling at a word its ayah reference pins (a muqatta'at letter name, the tasheel of 41:44); read without the reference it gives the planted tokens |
 
-Read-back cases left unexplained: 4; refused by the engine: 1.
+Read-back cases left unexplained: 5; refused by the engine: 2.
 
 ## G3 real model output (V4 benchmark, public correct tiers)
 
@@ -112,27 +114,27 @@ Word-flag agreement, per Uthmani word, flagged (not a match) by quran-p2g vs fla
 
 | model | tier | clips | ref words | WER undiacritized | WER diacritized | agreement raw | scorer conventions | up to ties |
 |---|---|---|---|---|---|---|---|---|
-| TajweedFormer V4 (AGG 18k) | t1p_panel_correct_dev | 930 | 6,074 | 0.95 % | 1.14 % | 99.87 % (6,066 / 6,074) | 100.00 % | 100.00 % |
-| TajweedFormer V4 (AGG 18k) | t1p_panel_correct_test | 1,780 | 12,173 | 2.23 % | 2.60 % | 99.90 % (12,160 / 12,172) | 99.97 % | 100.00 % |
-| zipformer v3.1 | t1p_panel_correct_dev | 930 | 6,074 | 1.23 % | 1.35 % | 99.90 % (6,068 / 6,074) | 99.97 % | 100.00 % |
-| zipformer v3.1 | t1p_panel_correct_test | 1,780 | 12,173 | 3.03 % | 3.31 % | 99.84 % (12,152 / 12,172) | 99.94 % | 100.00 % |
+| TajweedFormer V4 (AGG 18k) | t1p_panel_correct_dev | 930 | 6,074 | 0.99 % | 1.17 % | 99.77 % (6,060 / 6,074) | 100.00 % | 100.00 % |
+| TajweedFormer V4 (AGG 18k) | t1p_panel_correct_test | 1,780 | 12,173 | 2.24 % | 2.60 % | 99.71 % (12,137 / 12,172) | 99.97 % | 100.00 % |
+| zipformer v3.1 | t1p_panel_correct_dev | 930 | 6,074 | 1.25 % | 1.37 % | 99.79 % (6,061 / 6,074) | 99.97 % | 100.00 % |
+| zipformer v3.1 | t1p_panel_correct_test | 1,780 | 12,173 | 3.05 % | 3.34 % | 99.70 % (12,136 / 12,172) | 99.94 % | 100.00 % |
 
 Every disagreement by class (raw: disagrees with quran-p2g's defaults; convention only: agrees raw, disagrees once quran-p2g runs with the scorer's conventions). Kind: (a) an attribution tie, (b) a convention difference.
 
 | model | tier | class | kind | words |
 |---|---|---|---|---|
 | TajweedFormer V4 (AGG 18k) | t1p_panel_correct_dev | raw:repeat_item | b | 1 |
-| TajweedFormer V4 (AGG 18k) | t1p_panel_correct_dev | raw:wasl_edge | b | 7 |
+| TajweedFormer V4 (AGG 18k) | t1p_panel_correct_dev | raw:wasl_edge | b | 13 |
 | TajweedFormer V4 (AGG 18k) | t1p_panel_correct_test | convention_only:tie_in_scorer_cost | a | 2 |
 | TajweedFormer V4 (AGG 18k) | t1p_panel_correct_test | raw:repeat_item | b | 2 |
 | TajweedFormer V4 (AGG 18k) | t1p_panel_correct_test | raw:tie_in_scorer_cost | a | 2 |
-| TajweedFormer V4 (AGG 18k) | t1p_panel_correct_test | raw:wasl_edge | b | 8 |
+| TajweedFormer V4 (AGG 18k) | t1p_panel_correct_test | raw:wasl_edge | b | 31 |
 | zipformer v3.1 | t1p_panel_correct_dev | convention_only:tie_in_scorer_cost | a | 2 |
-| zipformer v3.1 | t1p_panel_correct_dev | raw:wasl_edge | b | 6 |
+| zipformer v3.1 | t1p_panel_correct_dev | raw:wasl_edge | b | 13 |
 | zipformer v3.1 | t1p_panel_correct_test | convention_only:tie_in_scorer_cost | a | 2 |
-| zipformer v3.1 | t1p_panel_correct_test | raw:repeat_item | b | 9 |
+| zipformer v3.1 | t1p_panel_correct_test | raw:repeat_item | b | 8 |
 | zipformer v3.1 | t1p_panel_correct_test | raw:tie_in_scorer_cost | a | 4 |
-| zipformer v3.1 | t1p_panel_correct_test | raw:wasl_edge | b | 7 |
+| zipformer v3.1 | t1p_panel_correct_test | raw:wasl_edge | b | 24 |
 
 - `wasl_edge` (b): quran-p2g accepts the last word running into the next ayah (or the first continuing the previous one) in wasl; the scorer's lattice has ibtida and waqf edges only.
 - `repeat_item` (b): quran-p2g reports repeated material as an inserted repeat and leaves the words around it a match; the scorer absorbs it into a neighbouring word and flags that word.
@@ -183,7 +185,7 @@ Most frequent residual words (said by quran_transcript / expected by quran-g2p):
 |---|---|---|---|
 | letter_swap | 6,236 | 6,230 (99.90 %) | ha / ta of a word written with ta marbuta: 4; a tanween's noon (tanween is a mark, not a letter): 2 |
 | letter_drop | 6,236 | 6,191 (99.28 %) | a tanween's noon (tanween is a mark, not a letter): 45 |
-| letter_add | 6,236 | 5,954 (95.48 %) | hamza seats and alef maqsura folded by the board's normalisation: 3; a doubled consonant (shadda is a mark, not a letter): 265; a written noon sakin or tanween said openly (same letters): 14 |
+| letter_add | 6,236 | 5,963 (95.62 %) | hamza seats and alef maqsura folded by the board's normalisation: 3; a doubled consonant (shadda is a mark, not a letter): 257; a written noon sakin or tanween said openly (same letters): 13 |
 
 Real snaps: **0**.
 
@@ -192,6 +194,8 @@ Part B: the same one-word mistake put into the text a text model would write and
 | edit | cases | text model WER | phones through quran-p2g WER |
 |---|---|---|---|
 | word_swap | 6,032 | 7.81 % | 7.97 % |
-| word_insert | 6,032 | 7.83 % | 8.01 % |
-| word_drop | 6,032 | 7.82 % | 7.90 % |
-| word_repeat | 6,032 | 7.83 % | 7.83 % |
+| word_insert | 6,032 | 7.83 % | 8.02 % |
+| word_drop | 6,032 | 7.82 % | 7.89 % |
+| word_repeat | 6,032 | 7.83 % | 7.84 % |
+| two_mistakes (several mistakes together) | 4,681 | 12.78 % | 12.98 % |
+| three_adjacent (several mistakes together) | 4,681 | 17.14 % | 17.33 % |
