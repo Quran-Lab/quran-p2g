@@ -240,3 +240,20 @@ forces it whatever is written, checked mechanically:
 
 quran-g2p refuses a non-mushaf spelling at a word its ayah reference pins (the letter name قٓ of 50:1, the tasheel
 of ءَا۬عْجَمِىٌّ in 41:44); such a word is read again without the reference and counted separately.
+
+## 0.1.2: one wrong word is one word error
+
+A symmetric test (the same word-level error put into a text model's output and into a phoneme model's phones, both
+scored by the same WER) showed that a wrongly read word cost a phoneme model more than a text model: 18.11 % against
+14.57 % WER when one word per clip was replaced. The phone alignment could tie "word A read wrongly" with "word A
+deleted and its phones absorbed by word B", and the tie-break sometimes took the second, so one wrong word became two
+(for example "qadlmi'ad" for "yukhlifu l-mi'ad" with yukhlifu read as "qad"). After the alignment, a re-split now tries
+every boundary between two neighbouring words, keeps the boundary states legal (a word in waqf is followed by a word in
+ibtida, the outer boundaries unchanged), and takes the split with the fewest words wrong at the letter level. It changes
+the alignment only when that number strictly drops, so it cannot hide a mistake. The same test after the fix: 14.75 %
+against 14.57 %; inserted, deleted and repeated words within 0.25 points of the text path; one letter swapped in
+15.5 % of words reads 15.42 %.
+
+The unvowelled noon / meem swap is tajweed only in the iqlab context (the next sound, in the word or at the start of
+the next word, is ba). Anywhere else it is a different word ("ka'annahun" for "ka'annahum") and counts as a letter
+mistake.

@@ -172,12 +172,20 @@ def _base(t):
     return t[0] if t not in SHORT and t not in LONG else t
 
 
+def _before_ba(seq, k, next_core):
+    """iqlab context: the sound after position k is ba (in the word, or the next word's first sound). 0.1.2: an
+    unvowelled noon / meem swap anywhere else is a letter mistake (e.g. kaannahum read kaannahun before lu'lu')."""
+    nxt = seq[k + 1] if k + 1 < len(seq) else (next_core[0] if next_core else None)
+    return nxt is not None and _base(nxt) == "ب"
+
+
 def _unvowelled(seq, k):
     return k + 1 >= len(seq) or (seq[k + 1] not in SHORT and seq[k + 1] not in LONG)
 
 
-def deviation_level(expected_core, said_core):
-    """-> (level, edits): the most visible class of the differences, and the edits as [op, expected, said]."""
+def deviation_level(expected_core, said_core, next_core=None):
+    """-> (level, edits): the most visible class of the differences, and the edits as [op, expected, said].
+    next_core: the first core token of the following word (iqlab can cross the word boundary)."""
     ops = _wlev_ops(expected_core, said_core)
     lv, edits = -1, []
     for op, i, j in ops:
@@ -194,8 +202,8 @@ def deviation_level(expected_core, said_core):
             elif e[0] in _NASALS and s[0] in _NASALS and IKHFA in (e, s):
                 k = 0
             elif {_base(e), _base(s)} == {"ن", "م"} and _unvowelled(expected_core, i) \
-                    and _unvowelled(said_core, j):
-                k = 0                                            # iqlab against izhar
+                    and _unvowelled(said_core, j) and _before_ba(expected_core, i, next_core):
+                k = 0                                            # iqlab against izhar (only before ba: 0.1.2)
             else:
                 k = 2
         else:
@@ -272,7 +280,108 @@ def convert(tokens, ayah=None, fmt: str = "tj3", *, open_edges: bool = True, bas
     al = AL.align(hyp, [p[0] for p in preps], [p[1] for p in preps], fmt, n_prefix=len(pre),
                   open_left=open_edges and ayat[0].prev == "prev", open_right=open_edges and ayat[-1].has_next,
                   free_edges=free_edges, repeats=repeats)
+    _rebalance(hyp, preps, al, fmt)
     return _build(hyp, fmt, words, preps, al, ayat, len(pre), ref_str(s, a0, a1), retrieval)
+
+
+# ------------------------------------------------------------------------------------------------ word re-split
+# 0.1.2: the phone alignment can tie "word A said wrongly" with "word A deleted, its phones absorbed into word B" (the
+# insertion and deletion costs make both paths cost the same), and the tie-break sometimes takes the second. One wrong
+# word then becomes two wrong words (A deleted + B deviant, e.g. "...la yukhlifu l-mi'ad" with yukhlifu read as "qad"
+# gave "qadlmi'ad"), which charges a phoneme model twice for one mistake that a text model is charged once for. The
+# re-split tries every boundary between two neighbouring words and keeps the one with the FEWEST words wrong at the
+# letter level (deleted counts as wrong); it changes the alignment only when that number strictly drops, so it can never
+# hide a mistake. Tried: changing INS / DEL / skip costs (moved other tie-breaks and broke G1 cases); rejected.
+
+def _lev_ops(toks, said, fmt):
+    """token Levenshtein (sub_cost, insertion / deletion AL.INS) -> (cost, ops as in AL.WordAlign)"""
+    n, m = len(toks), len(said)
+    D = [[0] * (m + 1) for _ in range(n + 1)]
+    for i in range(1, n + 1):
+        D[i][0] = i * AL.DEL
+    for j in range(1, m + 1):
+        D[0][j] = j * AL.INS
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            D[i][j] = min(D[i - 1][j] + AL.DEL, D[i][j - 1] + AL.INS,
+                          D[i - 1][j - 1] + sub_cost(toks[i - 1], said[j - 1], fmt))
+    ops, i, j = [], n, m
+    while i or j:
+        if i and j and D[i][j] == D[i - 1][j - 1] + sub_cost(toks[i - 1], said[j - 1], fmt):
+            ops.append(("eq" if toks[i - 1] == said[j - 1] else "sub", toks[i - 1], said[j - 1])); i -= 1; j -= 1
+        elif i and D[i][j] == D[i - 1][j] + AL.DEL:
+            ops.append(("del", toks[i - 1], None)); i -= 1
+        else:
+            ops.append(("ins", None, said[j - 1])); j -= 1
+    ops.reverse()
+    return D[n][m], ops
+
+
+def _word_fit(forms, said, fmt, allowed=None):
+    """-> (wrong 0/1, edit cost, form index, ops): wrong = deleted or deviant at the letter level; allowed = the form
+    indices to consider (boundary states)"""
+    best = None
+    for fi, t in enumerate(forms):
+        if allowed is not None and fi not in allowed:
+            continue
+        c, ops = _lev_ops(t, said, fmt)
+        if best is None or c < best[1]:
+            best = (fi, c, ops)
+    fi, c, ops = best
+    if not said:
+        wrong = 1
+    elif tuple(said) == tuple(forms[fi]):
+        wrong = 0
+    else:
+        wrong = int(deviation_level(to_core(list(forms[fi]), fmt), to_core(list(said), fmt))[0] == "letters")
+    return wrong, c, fi, ops
+
+
+def _lstate(L):
+    return AL.S_STOP if L == "ibtida" else AL.WASL
+
+
+def _rstate(R):
+    return AL.S_STOP if R == "waqf" else AL.WASL
+
+
+def _rebalance(hyp, preps, al, fmt):
+    ws = sorted(al.words, key=lambda x: x.word)
+    blocked = {ins.boundary for ins in al.insertions}
+    for _ in range(3):
+        changed = False
+        for k in range(len(ws) - 1):
+            a, b = ws[k], ws[k + 1]
+            if b.word != a.word + 1 or a.j1 != b.j0 or b.word in blocked:
+                continue
+            fa, fb = preps[a.word][0], preps[b.word][0]
+            sa, sb = preps[a.word][1], preps[b.word][1]
+            xa = _word_fit(fa, hyp[a.j0:a.j1], fmt, {a.form})
+            xb = _word_fit(fb, hyp[b.j0:b.j1], fmt, {b.form})
+            cur = xa[0] + xb[0]
+            if cur == 0:
+                continue
+            # the outer boundaries keep their states (a's left, b's right); the shared boundary must agree, as in
+            # the aligner: a word in waqf is followed by a word in ibtida
+            ca = [i for i in range(len(fa)) if _lstate(sa[i][0]) == _lstate(sa[a.form][0])]
+            cb = [i for i in range(len(fb)) if _rstate(sb[i][1]) == _rstate(sb[b.form][1])]
+            pairs = [(i, j) for i in ca for j in cb if _rstate(sa[i][1]) == _lstate(sb[j][0])]
+            best = None
+            for s in range(a.j0, b.j1 + 1):
+                for i, j in pairs:
+                    ya, yb = _word_fit(fa, hyp[a.j0:s], fmt, {i}), _word_fit(fb, hyp[s:b.j1], fmt, {j})
+                    key = (ya[0] + yb[0], ya[1] + yb[1])
+                    if best is None or key < best[0]:
+                        best = (key, s, ya, yb)
+            if best is None:
+                continue
+            (wrong, _), s, ya, yb = best
+            if wrong < cur:
+                a.j1, a.form, a.ops, a.cost, a.skipped = s, ya[2], ya[3], ya[1], s == a.j0
+                b.j0, b.form, b.ops, b.cost, b.skipped = s, yb[2], yb[3], yb[1], s == b.j1
+                changed = True
+        if not changed:
+            break
 
 
 def _wkey(w):
@@ -352,7 +461,11 @@ def _build(hyp, fmt, words, preps, al, ayat, n_pre, ref, retrieval):
                 status = "deviant"
             r = WordResult(ay.key, ti, ay.uthmani[ti], _imlaei_of(ay, ti), status, ph, exp, form)
             if status == "deviant":
-                r.level, r.edits = deviation_level(core_e, core_s)
+                nx = None                                        # the next word's first sound (iqlab context)
+                if w in by_word:
+                    nt = preps[w][0][by_word[w].form]
+                    nx = to_core(list(nt[:1]), fmt) if nt else None
+                r.level, r.edits = deviation_level(core_e, core_s, nx)
                 r.spelling = spell_core(core_s, ay.uthmani[ti], geminates_known=fmt in ("tj3g", "units"),
                                         waqf=form["right"] == "waqf")
             r.text = "" if status == "deleted" else (

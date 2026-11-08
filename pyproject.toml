@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "quran-p2g"
-version = "0.1.1"
+version = "0.1.2"
 description = "Phonemes in, Quranic text out: the inverse companion of quran-g2p (Hafs 'an 'Asim)"
 readme = "README.md"
 requires-python = ">=3.10"
