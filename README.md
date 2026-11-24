@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/tests-133%20passing-brightgreen" alt="tests">
   <img src="https://img.shields.io/badge/round%20trip-6%2C236%20%2F%206%2C236%20ayat-0b3d2e" alt="round trip">
   <img src="https://img.shields.io/badge/riwaya-Hafs%20%CA%BFan%20%CA%BFAsim%20(al--Shatibiyyah)-0b3d2e" alt="riwaya">
-  <img src="https://img.shields.io/badge/license-Quran--Lab%20NPL--1.2-8a6d00" alt="license">
+  <img src="https://img.shields.io/badge/license-Quran--Lab%20NPL--1.3-8a6d00" alt="license">
 </p>
 
 **Phonemes in, Quranic text out, so a phoneme model gets a word error rate that means what a text model's
@@ -195,8 +195,9 @@ reading here comes from.
 
 ## License
 
-**Quran-Lab No-Profit License, Version 1.2 (NPL-1.2)**, the same license as quran-g2p: free to use, run, copy and
+**Quran-Lab No-Profit License, Version 1.3 (NPL-1.3)**, the same license as quran-g2p: free to use, run, copy and
 adapt. The work itself is never for sale, so you may not charge for it, for access to it, or for any feature it
-powers. What you earn from your own teaching, services or labour is your own. See [LICENSE](LICENSE). The
+powers. Neither it nor its outputs may be used to train a machine-learning model without Quran Lab's
+written permission. What you earn from your own teaching, services or labour is your own. See [LICENSE](LICENSE). The
 packaged texts derive from the Tanzil Uthmani text and the KFGQPC Hafs v18 text, which remain under their own
 terms.
